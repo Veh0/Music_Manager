@@ -1,27 +1,27 @@
 <?php
 
 
-namespace App\Entity\Album;
+namespace App\Entity\Tracklist;
 
 
 use App\Entity\Media\MediumInterface;
 use App\Entity\Track\TrackInterface;
 
-interface AlbumInterface
+interface TracklistInterface
 {
-    // get Album Medium
+    // get Tracklist Medium
     public function getMedium(): MediumInterface;
 
-    // get Album title
+    // get Tracklist title
     public function getTitle(): string;
 
-    // get Album Tracks
+    // get Tracklist Tracks
     public function getTracks(): array;
 
-    // get Album duration
+    // get Tracklist duration
     public function getDuration(): int;
 
-    // get Album artist
+    // get Tracklist artist
     public function getArtist(): string;
 
 }

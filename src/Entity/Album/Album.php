@@ -1,13 +1,13 @@
 <?php
 
 
-namespace App\Entity\Album;
+namespace App\Entity\Tracklist;
 
 
 use App\Entity\Media\MediumInterface;
 use App\Entity\Track\TrackInterface;
 
-class Album implements AlbumInterface
+abstract class AbstractTracklist implements TracklistInterface
 {
     /** @var MediumInterface */
     protected $medium;

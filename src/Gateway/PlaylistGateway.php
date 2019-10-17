@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\src\Gateway;
+namespace App\Gateway;
 
 
 class PlaylistGateway
