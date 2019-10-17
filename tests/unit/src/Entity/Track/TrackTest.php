@@ -5,19 +5,29 @@ namespace App\Tests\unit\src\Entity\Track;
 
 
 use App\Entity\Album\Album;
+use App\Entity\Artist\Artist;
 use App\Entity\Track\Track;
 use Codeception\PHPUnit\TestCase;
 
 class TrackTest extends TestCase
 {
+    public function testIdAccessors()
+    {
+        // PREPARE
+        $track = new Track();
+        // RUN
+
+        // ASSERT
+        $this->assertEquals(0, $track->getId());
+    }
     public function testDurationAccessors()
     {
         // PREPARE
         $track = new Track();
         // RUN
-        $track->setDuration(5);
+        $track->setDuration(155);
         //ASSERT
-        $this->assertEquals(5, $track->getDuration());
+        $this->assertEquals(155, $track->getDuration());
     }
 
     public function testArtistAccessors()
@@ -25,9 +35,9 @@ class TrackTest extends TestCase
         // PREPARE
         $track = new Track();
         // RUN
-        $track->setArtist('test');
+        $track->setArtist(new Artist());
         //ASSERT
-        $this->assertEquals('test', $track->getArtist());
+        $this->assertEquals(new Artist(), $track->getArtist());
     }
 
     public function testAlbumAccessors()
@@ -35,9 +45,9 @@ class TrackTest extends TestCase
         // PREPARE
         $track = new Track();
         // RUN
-        $track->setAlbum($this->getMockForAbstractClass(Album::class));
+        $track->setAlbum(new Album);
         //ASSERT
-        $this->assertEquals($this->getMockForAbstractClass(Album::class), $track->getAlbum());
+        $this->assertEquals(new Album, $track->getAlbum());
     }
 
     public function testTitleAccessors()

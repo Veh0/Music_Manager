@@ -24,7 +24,7 @@ class Track implements TrackInterface
     private $title;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="int")
      */
     private $duration;
 
@@ -55,12 +55,12 @@ class Track implements TrackInterface
         return $this;
     }
 
-    public function getDuration(): \DateTimeInterface
+    public function getDuration(): int
     {
         return $this->duration;
     }
 
-    public function setDuration(\DateTimeInterface $duration): self
+    public function setDuration(int $duration): self
     {
         $this->duration = $duration;
 

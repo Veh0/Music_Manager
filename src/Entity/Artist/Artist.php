@@ -46,7 +46,7 @@ class Artist implements ArtistInterface
         $this->albums = new ArrayCollection();
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

@@ -5,26 +5,29 @@ namespace App\Tests\unit\src\Entity\Album;
 
 
 use App\Entity\Album\Album;
+use App\Entity\Artist\Artist;
 use App\Entity\Media\AbstractMedium;
 use App\Entity\Track\Track;
 use Codeception\PHPUnit\TestCase;
+use Doctrine\Common\Collections\ArrayCollection;
+use mysql_xdevapi\Collection;
 
 class AlbumTest extends TestCase
 {
     public function testArtistAccessors()
     {
         // PREPARE
-        $album = $this->getMockForAbstractClass(Album::class);
+        $album = new Album;
         // RUN
-        $album -> setArtist("a");
+        $album -> setArtist(new Artist());
         // ASSERT
-        $this -> assertEquals("a", $album->getArtist());
+        $this -> assertEquals(new Artist(), $album->getArtist());
     }
 
     public function testTitleAccessors()
     {
         // PREPARE
-        $album = $this->getMockForAbstractClass(Album::class);
+        $album = new Album;
         // RUN
         $album -> setTitle("a");
         // ASSERT
@@ -34,7 +37,7 @@ class AlbumTest extends TestCase
     public function testMediumAccessors()
     {
         // PREPARE
-        $album = $this->getMockForAbstractClass(Album::class);
+        $album = new Album;
         $medium = $this->getMockForAbstractClass(AbstractMedium::class);
         // RUN
         $album -> setMedium(new $medium);
@@ -44,20 +47,20 @@ class AlbumTest extends TestCase
 
     public function testDurationAccessors() {
         // PREPARE
-        $album = $this->getMockForAbstractClass(Album::class);
-        // RUN
-        $album -> setDuration(1);
+        $album = new Album;
+        //
+        $album -> setDuration(155);
         // ASSERT
-        $this -> assertEquals(1, $album->getDuration());
+        $this -> assertEquals(155, $album->getDuration());
     }
 
     public function testTracksAccessors() {
         // PREPARE
-        $album = $this->getMockForAbstractClass(Album::class);
+        $album = new Album;
         // RUN
-        $tracks = array(new Track(), new Track());
-        $album -> setTracks($tracks);
+        $album -> addTrack(new Track());
+        $album ->removeTrack(new Track());
         // ASSERT
-        $this -> assertEquals($tracks, $album->getTracks());
+        $this -> assertEquals(array(), $album->getTracks());
     }
 }

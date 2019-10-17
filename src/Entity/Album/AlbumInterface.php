@@ -4,6 +4,7 @@
 namespace App\Entity\Album;
 
 
+use App\Entity\Artist\ArtistInterface;
 use App\Entity\Media\MediumInterface;
 use App\Entity\Track\TrackInterface;
 use Doctrine\Common\Collections\Collection;
@@ -21,9 +22,9 @@ interface AlbumInterface
     public function getTracks(): Collection;
 
     // get Tracklist duration
-    public function getDuration(): \DateTimeInterface;
+    public function getDuration(): int;
 
     // get Tracklist artist
-    public function getArtist(): Collection;
+    public function getArtist(): ArtistInterface;
 
 }

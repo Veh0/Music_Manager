@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Track;
-use App\Entity\Album;
-use App\Entity\Vinyl;
+use App\Entity\Playlist\Playlist;
+use App\Entity\Track\Track;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -17,6 +16,7 @@ class HomeController extends AbstractController {
     public function index()
     {
         $title = "Home";
+
 
         return $this -> render("base.html.twig", [
             "page_title" => $title

@@ -15,7 +15,9 @@ class Playlist implements PlaylistInterface
     /** @var array */
     protected $tracks;
 
-    /** @param TrackInterface $track */
+    /**
+     * @param TrackInterface $track
+     */
     public function addTrack(TrackInterface $track): void
     {
         // TODO: Implement addTrack() method.
@@ -23,20 +25,13 @@ class Playlist implements PlaylistInterface
         $this->duration += $track->getDuration();
     }
 
+
     /**
      * @return int
      */
     public function getDuration(): int
     {
         return $this->duration;
-    }
-
-    /**
-     * @param int $duration
-     */
-    public function setDuration(int $duration): void
-    {
-        $this->duration = $duration;
     }
 
     /**

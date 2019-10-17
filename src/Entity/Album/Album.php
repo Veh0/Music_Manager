@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\Album;
 
-use App\Entity\Album\AlbumInterface;
 use App\Entity\Artist\ArtistInterface;
+use App\Entity\Media\MediumInterface;
 use App\Entity\Track\TrackInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -37,7 +37,7 @@ class Album implements AlbumInterface
     private $tracks;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="int")
      */
     private $duration;
 
@@ -56,7 +56,7 @@ class Album implements AlbumInterface
         return $this->id;
     }
 
-    public function getMedium()
+    public function getMedium(): MediumInterface
     {
         return $this->medium;
     }
@@ -68,7 +68,7 @@ class Album implements AlbumInterface
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -111,12 +111,12 @@ class Album implements AlbumInterface
         return $this;
     }
 
-    public function getDuration(): ?\DateTimeInterface
+    public function getDuration(): int
     {
         return $this->duration;
     }
 
-    public function setDuration(\DateTimeInterface $duration): self
+    public function setDuration(int $duration): self
     {
         $this->duration = $duration;
 
