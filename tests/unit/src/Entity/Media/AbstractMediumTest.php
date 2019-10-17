@@ -23,8 +23,9 @@ class AbstractMediumTest extends TestCase
         // PREPARE
         $medium = $this->getMockForAbstractClass(AbstractMedium::class);
         // RUN
-        $medium->setAlbum(new Album());
+        $tracklist = $this->getMockForAbstractClass(Album::class);
+        $medium->setAlbum(new $tracklist());
         // ASSERT
-        $this->assertEquals(new Album(), $medium->getAlbum());
+        $this->assertEquals(new $tracklist(), $medium->getAlbum());
     }
 }

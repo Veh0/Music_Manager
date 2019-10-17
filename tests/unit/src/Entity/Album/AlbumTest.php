@@ -14,7 +14,7 @@ class AlbumTest extends TestCase
     public function testArtistAccessors()
     {
         // PREPARE
-        $album = new Album();
+        $album = $this->getMockForAbstractClass(Album::class);
         // RUN
         $album -> setArtist("a");
         // ASSERT
@@ -24,7 +24,7 @@ class AlbumTest extends TestCase
     public function testTitleAccessors()
     {
         // PREPARE
-        $album = new Album();
+        $album = $this->getMockForAbstractClass(Album::class);
         // RUN
         $album -> setTitle("a");
         // ASSERT
@@ -34,7 +34,7 @@ class AlbumTest extends TestCase
     public function testMediumAccessors()
     {
         // PREPARE
-        $album = new Album();
+        $album = $this->getMockForAbstractClass(Album::class);
         $medium = $this->getMockForAbstractClass(AbstractMedium::class);
         // RUN
         $album -> setMedium(new $medium);
@@ -44,7 +44,7 @@ class AlbumTest extends TestCase
 
     public function testDurationAccessors() {
         // PREPARE
-        $album = new Album();
+        $album = $this->getMockForAbstractClass(Album::class);
         // RUN
         $album -> setDuration(1);
         // ASSERT
@@ -53,7 +53,7 @@ class AlbumTest extends TestCase
 
     public function testTracksAccessors() {
         // PREPARE
-        $album = new Album();
+        $album = $this->getMockForAbstractClass(Album::class);
         // RUN
         $tracks = array(new Track(), new Track());
         $album -> setTracks($tracks);

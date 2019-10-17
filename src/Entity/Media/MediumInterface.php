@@ -11,6 +11,6 @@ interface MediumInterface
     // get Medium price
     public function getPrice(): float;
 
-    // get Medium Album
+    // get Medium Tracklist
     public function getAlbum(): AlbumInterface;
 }

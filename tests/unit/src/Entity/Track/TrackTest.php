@@ -35,9 +35,9 @@ class TrackTest extends TestCase
         // PREPARE
         $track = new Track();
         // RUN
-        $track->setAlbum(new Album());
+        $track->setAlbum($this->getMockForAbstractClass(Album::class));
         //ASSERT
-        $this->assertEquals(new Album(), $track->getAlbum());
+        $this->assertEquals($this->getMockForAbstractClass(Album::class), $track->getAlbum());
     }
 
     public function testTitleAccessors()

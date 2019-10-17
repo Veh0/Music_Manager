@@ -1,13 +1,15 @@
 <?php
 
 
-namespace App\Entity\Tracklist;
+namespace App\Entity\Album;
 
 
 use App\Entity\Media\MediumInterface;
 use App\Entity\Track\TrackInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
-interface TracklistInterface
+interface AlbumInterface
 {
     // get Tracklist Medium
     public function getMedium(): MediumInterface;
@@ -16,12 +18,12 @@ interface TracklistInterface
     public function getTitle(): string;
 
     // get Tracklist Tracks
-    public function getTracks(): array;
+    public function getTracks(): Collection;
 
     // get Tracklist duration
-    public function getDuration(): int;
+    public function getDuration(): \DateTimeInterface;
 
     // get Tracklist artist
-    public function getArtist(): string;
+    public function getArtist(): Collection;
 
 }

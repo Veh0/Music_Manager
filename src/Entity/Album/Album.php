@@ -1,107 +1,137 @@
 <?php
 
+namespace App\Entity;
 
-namespace App\Entity\Tracklist;
-
-
-use App\Entity\Media\MediumInterface;
+use App\Entity\Album\AlbumInterface;
+use App\Entity\Artist\ArtistInterface;
 use App\Entity\Track\TrackInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
-abstract class AbstractTracklist implements TracklistInterface
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\AlbumRepository")
+ */
+class Album implements AlbumInterface
 {
-    /** @var MediumInterface */
-    protected $medium;
-
-    /** @var string */
-    protected $title;
-
-    /** @var TrackInterface[] */
-    protected $tracks;
-
-    /** @var int */
-    protected $duration;
-
-    /** @var string */
-    protected $artist;
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
     /**
-     * @return MediumInterface
+     * @ORM\Column(type="object")
      */
-    public function getMedium(): MediumInterface
+    private $medium;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Track", mappedBy="album")
+     */
+    private $tracks;
+
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $duration;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="albums")
+     */
+    private $artist;
+
+    public function __construct()
+    {
+        $this->tracks = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getMedium()
     {
         return $this->medium;
     }
 
-    /**
-     * @param MediumInterface $medium
-     */
-    public function setMedium(MediumInterface $medium): void
+    public function setMedium($medium): self
     {
         $this->medium = $medium;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title): void
+    public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
     }
 
     /**
-     * @return TrackInterface[]
+     * @return Collection|TrackInterface[]
      */
-    public function getTracks(): array
+    public function getTracks(): Collection
     {
         return $this->tracks;
     }
 
-    /**
-     * @param TrackInterface[] $tracks
-     */
-    public function setTracks(array $tracks): void
+    public function addTrack(TrackInterface $track): self
     {
-        $this->tracks = $tracks;
+        if (!$this->tracks->contains($track)) {
+            $this->tracks[] = $track;
+            $track->setAlbum($this);
+        }
+
+        return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getDuration(): int
+    public function removeTrack(TrackInterface $track): self
+    {
+        if ($this->tracks->contains($track)) {
+            $this->tracks->removeElement($track);
+            // set the owning side to null (unless already changed)
+            if ($track->getAlbum() === $this) {
+                $track->setAlbum(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDuration(): ?\DateTimeInterface
     {
         return $this->duration;
     }
 
-    /**
-     * @param int $duration
-     */
-    public function setDuration(int $duration): void
+    public function setDuration(\DateTimeInterface $duration): self
     {
         $this->duration = $duration;
+
+        return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getArtist(): string
+    public function getArtist(): ArtistInterface
     {
         return $this->artist;
     }
 
-    /**
-     * @param string $artist
-     */
-    public function setArtist(string $artist): void
+    public function setArtist(ArtistInterface $artist): self
     {
         $this->artist = $artist;
-    }
 
+        return $this;
+    }
 }

@@ -24,9 +24,12 @@ class PlaylistTest extends TestCase
         // PREPARE
         $playlist = new Playlist();
         // RUN
-        $playlist -> addTrack(new Track());
+        $track = new Track();
+        $track->setDuration(5);
+        $playlist -> addTrack($track);
         //ASSERT
-        $this->assertEquals(array(new Track()), $playlist->getTracks());
+        $this->assertEquals(array($track), $playlist->getTracks());
+        $this->assertEquals(5, $playlist->getDuration());
     }
 
 }

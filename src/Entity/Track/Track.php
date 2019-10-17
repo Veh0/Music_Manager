@@ -1,89 +1,93 @@
 <?php
 
-
 namespace App\Entity\Track;
 
-
 use App\Entity\Album\AlbumInterface;
+use App\Entity\Artist\Artist;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\TrackRepository")
+ */
 class Track implements TrackInterface
 {
-
-    /** @var string */
-    protected $title;
-
-    /** @var int */
-    protected $duration;
-
-    /** @var AlbumInterface */
-    protected $album;
-
-    /** @var string */
-    protected $artist;
+    /**
+     * @ORM\Id()
+     * @ORM\GeneratedValue()
+     * @ORM\Column(type="integer")
+     */
+    private $id;
 
     /**
-     * @return string
+     * @ORM\Column(type="string", length=255)
      */
+    private $title;
+
+    /**
+     * @ORM\Column(type="time")
+     */
+    private $duration;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="tracks")
+     */
+    private $artist;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Album", inversedBy="tracks")
+     */
+    private $album;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title): void
+    public function setTitle(string $title): self
     {
         $this->title = $title;
+
+        return $this;
     }
 
-    /**
-     * @return int
-     */
-    public function getDuration(): int
+    public function getDuration(): \DateTimeInterface
     {
         return $this->duration;
     }
 
-    /**
-     * @param int $duration
-     */
-    public function setDuration(int $duration): void
+    public function setDuration(\DateTimeInterface $duration): self
     {
         $this->duration = $duration;
+
+        return $this;
     }
 
-    /**
-     * @return AlbumInterface
-     */
+    public function getArtist(): Artist
+    {
+        return $this->artist;
+    }
+
+    public function setArtist(Artist $artist): self
+    {
+        $this->artist = $artist;
+
+        return $this;
+    }
+
     public function getAlbum(): AlbumInterface
     {
         return $this->album;
     }
 
-    /**
-     * @param AlbumInterface $album
-     */
-    public function setAlbum(AlbumInterface $album): void
+    public function setAlbum(AlbumInterface $album): self
     {
         $this->album = $album;
+
+        return $this;
     }
-
-    /**
-     * @return string
-     */
-    public function getArtist(): string
-    {
-        return $this->artist;
-    }
-
-    /**
-     * @param string $artist
-     */
-    public function setArtist(string $artist): void
-    {
-        $this->artist = $artist;
-    }
-
-
 }

@@ -20,6 +20,7 @@ class Playlist implements PlaylistInterface
     {
         // TODO: Implement addTrack() method.
         $this->tracks[] = $track;
+        $this->duration += $track->getDuration();
     }
 
     /**

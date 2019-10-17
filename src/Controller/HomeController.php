@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Track;
-use App\Entity\Tracklist;
+use App\Entity\Album;
 use App\Entity\Vinyl;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

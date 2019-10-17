@@ -11,6 +11,6 @@ interface TrackInterface
     public function getTitle(): string;
 
     // get Track duration
-    public function getDuration(): int;
+    public function getDuration(): \DateTimeInterface;
 
 }
