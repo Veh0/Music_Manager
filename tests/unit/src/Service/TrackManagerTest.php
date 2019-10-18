@@ -63,7 +63,7 @@ class TrackManagerTest extends TestCase
         }
 
         $trackManager = new TrackManager($this->trackGateway);
-        $trackManager->exportToCsv();
+        $trackManager->export('csv');
         // ASSERT
         $this->assertEquals($newArray, fgetcsv(fopen('tracks.csv', 'r')));
     }
