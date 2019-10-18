@@ -42,11 +42,11 @@ class PlaylistGateway
     }
 
     /**
-     * @param MediumInterface $medium
+     * @param MediumInterface[] $media
      * @return AlbumInterface[]
      */
-    public function fetchAlbumsByMedium(MediumInterface $medium): ?array
+    public function fetchAlbumsByMedium(array $media): ?array
     {
-        return $this->albumRepository->findBy(array($medium));
+        return $this->albumRepository->findByMedia($media);
     }
 }

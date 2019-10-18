@@ -19,7 +19,7 @@ class ArtistTest extends TestCase
         // RUN
 
         // ASSERT
-        $this->assertEquals(null, $artist->getId());
+        $this->assertEquals(0, $artist->getId());
     }
 
     public function testNameAccessors()
@@ -47,10 +47,13 @@ class ArtistTest extends TestCase
         // PREPARE
         $artist = new Artist();
         // RUN
-        $tracklist = new Album();
-        $artist->addAlbum($tracklist);
+        $album = new Album();
+        $delAlbum = new Album();
+        $artist->addAlbum($album)
+               ->addAlbum($delAlbum)
+               ->removeAlbum($delAlbum);
         //ASSERT
-        $this->assertEquals(array($tracklist), $artist->getAlbums());
+        $this->assertEquals(array($album), $artist->getAlbums());
     }
 
     public function testTracksAccessors()
@@ -59,7 +62,10 @@ class ArtistTest extends TestCase
         $artist = new Artist();
         // RUN
         $track = new Track();
-        $artist->addTrack($track);
+        $delTrack = new Track();
+        $artist->addTrack($track)
+               ->addTrack($delTrack)
+               ->removeTrack($delTrack);
         //ASSERT
         $this->assertEquals(array($track), $artist->getTracks());
     }

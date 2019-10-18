@@ -14,6 +14,16 @@ use mysql_xdevapi\Collection;
 
 class AlbumTest extends TestCase
 {
+    public function testIdAccessors()
+    {
+        // PREPARE
+        $album = new Album();
+        // RUN
+
+        //ASSERT
+        $this->assertEquals(0, $album->getId());
+    }
+
     public function testArtistAccessors()
     {
         // PREPARE
@@ -40,9 +50,9 @@ class AlbumTest extends TestCase
         $album = new Album;
         $medium = $this->getMockForAbstractClass(AbstractMedium::class);
         // RUN
-        $album -> setMedium(new $medium);
+        $album -> addMedium(new $medium);
         // ASSERT
-        $this -> assertEquals(new $medium, $album->getMedium());
+        $this -> assertEquals(array(new $medium), $album->getMedia());
     }
 
     public function testDurationAccessors() {
@@ -57,10 +67,17 @@ class AlbumTest extends TestCase
     public function testTracksAccessors() {
         // PREPARE
         $album = new Album;
+
+        $a = new Track();
+        $a->setDuration(155);
+        $b = new Track();
+        $b->setDuration(205);
         // RUN
-        $album -> addTrack(new Track());
-        $album ->removeTrack(new Track());
+        $album->addTrack($a);
+        $album->addTrack($b);
+        $album->removeTrack($a);
         // ASSERT
-        $this -> assertEquals(array(), $album->getTracks());
+        $this->assertEquals(array($b), $album->getTracks());
+        $this->assertEquals(205, $album->getDuration());
     }
 }

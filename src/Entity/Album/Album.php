@@ -62,7 +62,7 @@ class Album implements AlbumInterface
         return $this->media;
     }
 
-    public function addMedium($medium): self
+    public function addMedium(MediumInterface $medium): self
     {
         $this->media[] = $medium;
 
@@ -94,6 +94,7 @@ class Album implements AlbumInterface
         if (!$this->tracks->contains($track)) {
             $this->tracks[] = $track;
             $track->setAlbum($this);
+            $this->duration += $track->getDuration();
         }
 
         return $this;
@@ -103,6 +104,7 @@ class Album implements AlbumInterface
     {
         if ($this->tracks->contains($track)) {
             $this->tracks->removeElement($track);
+            $this->duration -= $track->getDuration();
             // set the owning side to null (unless already changed)
             if ($track->getAlbum() === $this) {
                 $track->setAlbum(null);
@@ -124,12 +126,12 @@ class Album implements AlbumInterface
         return $this;
     }
 
-    public function getArtist(): ArtistInterface
+    public function getArtist(): ?ArtistInterface
     {
         return $this->artist;
     }
 
-    public function setArtist(ArtistInterface $artist): self
+    public function setArtist(?ArtistInterface $artist): self
     {
         $this->artist = $artist;
 

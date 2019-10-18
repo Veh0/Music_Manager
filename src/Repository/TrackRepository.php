@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Media\MediumInterface;
 use App\Entity\Track\Track;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -19,22 +20,23 @@ class TrackRepository extends ServiceEntityRepository
         parent::__construct($registry, Track::class);
     }
 
-    // /**
-    //  * @return Track[] Returns an array of Track objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param
+     * @return MediumInterface[] Returns an array of MediumInterface objects
+     */
+    public function findMediaByTitle($title)
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('t.media')
+            ->andWhere('t.title = :val')
+            ->setParameter('val', $title)
             ->orderBy('t.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
+            ->getArrayResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Track

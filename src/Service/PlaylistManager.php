@@ -30,8 +30,6 @@ class PlaylistManager
         $fetchTracks = $this->playlistGateway->fetchAllTracks();
         $random = rand(0, count($fetchTracks)-1);
 
-        dump($fetchTracks);
-
         while($playlist->getDuration() < $limit)
         {
             $track = $fetchTracks[$random];
@@ -88,14 +86,14 @@ class PlaylistManager
     }
 
     /**
-     * @param mediumInterface $medium
+     * @param MediumInterface[] $media
      * @return PlaylistInterface
      */
-    public function limitedMediumPlaylist(MediumInterface $medium): PlaylistInterface
+    public function limitedMediumPlaylist(array $media): PlaylistInterface
     {
         $playlist = new Playlist();
 
-        $fetchAlbums = $this->playlistGateway->fetchAlbumsByMedium($medium);
+        $fetchAlbums = $this->playlistGateway->fetchAlbumsByMedium($media);
 
         foreach ($fetchAlbums as $album)
         {

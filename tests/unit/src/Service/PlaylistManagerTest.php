@@ -129,17 +129,17 @@ class PlaylistManagerTest extends TestCase
         $firstAlbum = new Album();
         $firstAlbum->addTrack($a)
                    ->addTrack($b)
-                   ->setMedium($vinyle);
+                   ->addMedium($vinyle);
         $secondAlbum = new Album();
         $secondAlbum->addTrack($d)
-                    ->setMedium($cd);
+                    ->addMedium($cd);
 
-        $this->albumRepository->method("findBy")
+        $this->albumRepository->method("findByMedia")
             ->with(array($vinyle))
             ->willReturn(array($firstAlbum));
         // RUN
         $playlistManager = new PlaylistManager($this->playlistGateway);
-        $playlist = $playlistManager->limitedMediumPlaylist($vinyle);
+        $playlist = $playlistManager->limitedMediumPlaylist(array($vinyle));
         // ASSERT
         $this->assertEquals(array($a, $b), $playlist->getTracks());
     }

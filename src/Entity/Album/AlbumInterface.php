@@ -16,7 +16,7 @@ interface AlbumInterface
     public function getMedia(): array;
 
     // add Medium to Album media
-    public function addMedium(): self;
+    public function addMedium(MediumInterface $medium);
 
     // get Album title
     public function getTitle(): string;
@@ -28,6 +28,6 @@ interface AlbumInterface
     public function getDuration(): int;
 
     // get Album artist
-    public function getArtist(): ArtistInterface;
+    public function getArtist(): ?ArtistInterface;
 
 }
