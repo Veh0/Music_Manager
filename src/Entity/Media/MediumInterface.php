@@ -13,4 +13,7 @@ interface MediumInterface
 
     // get Medium Tracklist
     public function getAlbum(): AlbumInterface;
+
+    // get Medium Type
+    public function getType(): string;
 }

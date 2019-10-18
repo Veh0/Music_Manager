@@ -28,4 +28,13 @@ class AbstractMediumTest extends TestCase
         // ASSERT
         $this->assertEquals(new $tracklist(), $medium->getAlbum());
     }
+
+    public function testTypeAccessors() {
+        // PREPARE
+        $medium = $this->getMockForAbstractClass(AbstractMedium::class);
+        // RUN
+        $medium->setType('type');
+        // ASSERT
+        $this->assertEquals('type', $medium->getType());
+    }
 }
