@@ -46,6 +46,10 @@ class TrackManagerTest extends TestCase
         $this->assertEquals($track->getMedia(), $trackManager->getTrackMedia($track->getTitle()));
     }
 
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     */
     public function testExportToCsv()
     {
         // PREPARE
