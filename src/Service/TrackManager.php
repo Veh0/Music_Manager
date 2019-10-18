@@ -32,6 +32,7 @@ class TrackManager
         return $this->trackGateway->fetchMediaByTrackTitle($title);
     }
 
+    /** create a Csv file */
     public function exportToCsv()
     {
         $fetchTracks = $this->trackGateway->fetchAll();
@@ -46,9 +47,12 @@ class TrackManager
         fclose($fp);
     }
 
+    /** create a Xls file */
     public function exportToXls()
     {
         $fetchTracks = $this->trackGateway->fetchAll();
+
+        $filename = 'tracks.xls';
 
         $spreadsheet = new Spreadsheet();
         $spreadsheet->setActiveSheetIndex(0)
@@ -91,7 +95,5 @@ class TrackManager
         $writer = new Xls($spreadsheet);
         $writer->save($filename);
 
-        $writer = new Xls($spreadsheet);
-        $writer->save($filename);
     }
 }

@@ -45,16 +45,26 @@ class Track implements TrackInterface
      */
     protected $album;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return $this
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -78,11 +88,18 @@ class Track implements TrackInterface
         $this->media[] = $medium;
     }
 
+    /**
+     * @return int
+     */
     public function getDuration(): int
     {
         return $this->duration;
     }
 
+    /**
+     * @param int $duration
+     * @return $this
+     */
     public function setDuration(int $duration): self
     {
         $this->duration = $duration;
@@ -90,11 +107,18 @@ class Track implements TrackInterface
         return $this;
     }
 
+    /**
+     * @return Artist
+     */
     public function getArtist(): Artist
     {
         return $this->artist;
     }
 
+    /**
+     * @param Artist|null $artist
+     * @return $this
+     */
     public function setArtist(?Artist $artist): self
     {
         $this->artist = $artist;
@@ -102,11 +126,18 @@ class Track implements TrackInterface
         return $this;
     }
 
+    /**
+     * @return AlbumInterface
+     */
     public function getAlbum(): AlbumInterface
     {
         return $this->album;
     }
 
+    /**
+     * @param AlbumInterface|null $album
+     * @return $this
+     */
     public function setAlbum(?AlbumInterface $album): self
     {
         $this->album = $album;

@@ -46,16 +46,22 @@ class Artist implements ArtistInterface
         $this->albums = new ArrayCollection();
     }
 
+    /** @return int|null */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /** @return string */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     * @return $this
+     */
     public function setName(string $name): self
     {
         $this->name = $name;
@@ -68,6 +74,10 @@ class Artist implements ArtistInterface
         return $this->style;
     }
 
+    /**
+     * @param string $style
+     * @return $this
+     */
     public function setStyle(string $style): self
     {
         $this->style = $style;
@@ -83,6 +93,10 @@ class Artist implements ArtistInterface
         return $this->tracks;
     }
 
+    /**
+     * @param TrackInterface $track
+     * @return $this
+     */
     public function addTrack(TrackInterface $track): self
     {
         if (!$this->tracks->contains($track)) {
@@ -93,6 +107,10 @@ class Artist implements ArtistInterface
         return $this;
     }
 
+    /**
+     * @param TrackInterface $track
+     * @return $this
+     */
     public function removeTrack(TrackInterface $track): self
     {
         if ($this->tracks->contains($track)) {
@@ -114,6 +132,10 @@ class Artist implements ArtistInterface
         return $this->albums;
     }
 
+    /**
+     * @param AlbumInterface $album
+     * @return $this
+     */
     public function addAlbum(AlbumInterface $album): self
     {
         if (!$this->albums->contains($album)) {
@@ -124,6 +146,10 @@ class Artist implements ArtistInterface
         return $this;
     }
 
+    /**
+     * @param AlbumInterface $album
+     * @return $this
+     */
     public function removeAlbum(AlbumInterface $album): self
     {
         if ($this->albums->contains($album)) {

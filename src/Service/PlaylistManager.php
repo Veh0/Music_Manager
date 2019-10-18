@@ -22,6 +22,7 @@ class PlaylistManager
     /**
      * @param int $limit
      * @return PlaylistInterface
+     * Limit the Playlist duration
      */
     public function limitedDurationPlaylist(int $limit): ?PlaylistInterface
     {
@@ -47,6 +48,7 @@ class PlaylistManager
     /**
      * @param int $limit
      * @return PlaylistInterface
+     * Limit the number of Track in Playlist
      */
     public function limitedCountPlaylist(int $limit): ?PlaylistInterface
     {
@@ -65,6 +67,7 @@ class PlaylistManager
 
     /**
      * @return PlaylistInterface
+     * Genrate Playlist with fully Album
      */
     public function fullAlbumPlaylist(): ?PlaylistInterface
     {
@@ -88,6 +91,7 @@ class PlaylistManager
     /**
      * @param MediumInterface[] $media
      * @return PlaylistInterface
+     * Limit the Playlist to a certain Medium
      */
     public function limitedMediumPlaylist(array $media): PlaylistInterface
     {

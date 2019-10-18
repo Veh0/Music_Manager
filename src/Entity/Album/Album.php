@@ -52,16 +52,22 @@ class Album implements AlbumInterface
         $this->tracks = new ArrayCollection();
     }
 
+    /** @return int|null */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /** @return array */
     public function getMedia(): array
     {
         return $this->media;
     }
 
+    /**
+     * @param MediumInterface $medium
+     * @return $this
+     */
     public function addMedium(MediumInterface $medium): self
     {
         $this->media[] = $medium;
@@ -69,11 +75,16 @@ class Album implements AlbumInterface
         return $this;
     }
 
+    /** @return string */
     public function getTitle(): string
     {
         return $this->title;
     }
 
+    /**
+     * @param string $title
+     * @return $this
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -89,6 +100,10 @@ class Album implements AlbumInterface
         return $this->tracks;
     }
 
+    /**
+     * @param TrackInterface $track
+     * @return $this
+     */
     public function addTrack(TrackInterface $track): self
     {
         if (!$this->tracks->contains($track)) {
@@ -100,6 +115,10 @@ class Album implements AlbumInterface
         return $this;
     }
 
+    /**
+     * @param TrackInterface $track
+     * @return $this
+     */
     public function removeTrack(TrackInterface $track): self
     {
         if ($this->tracks->contains($track)) {
@@ -114,11 +133,16 @@ class Album implements AlbumInterface
         return $this;
     }
 
+    /** @return int */
     public function getDuration(): int
     {
         return $this->duration;
     }
 
+    /**
+     * @param int $duration
+     * @return $this
+     */
     public function setDuration(int $duration): self
     {
         $this->duration = $duration;
@@ -126,11 +150,16 @@ class Album implements AlbumInterface
         return $this;
     }
 
+    /** @return ArtistInterface|null */
     public function getArtist(): ?ArtistInterface
     {
         return $this->artist;
     }
 
+    /**
+     * @param ArtistInterface|null $artist
+     * @return $this
+     */
     public function setArtist(?ArtistInterface $artist): self
     {
         $this->artist = $artist;
