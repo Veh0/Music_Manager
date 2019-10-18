@@ -19,32 +19,33 @@ class Album implements AlbumInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\Column(type="object")
+     * @ORM\Column(type="array")
+     * @var MediumInterface[]
      */
-    private $medium;
+    protected $media;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    protected $title;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Track", mappedBy="album")
      */
-    private $tracks;
+    protected $tracks;
 
     /**
      * @ORM\Column(type="int")
      */
-    private $duration;
+    protected $duration;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="albums")
      */
-    private $artist;
+    protected $artist;
 
     public function __construct()
     {
@@ -56,14 +57,14 @@ class Album implements AlbumInterface
         return $this->id;
     }
 
-    public function getMedium(): MediumInterface
+    public function getMedia(): array
     {
-        return $this->medium;
+        return $this->media;
     }
 
-    public function setMedium($medium): self
+    public function addMedium($medium): self
     {
-        $this->medium = $medium;
+        $this->media[] = $medium;
 
         return $this;
     }

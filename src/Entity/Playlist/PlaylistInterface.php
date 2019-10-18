@@ -16,5 +16,5 @@ interface PlaylistInterface
     public function getDuration(): int;
 
     // get Playlist tracks
-    public function getTracks(): array;
+    public function getTracks(): ?array;
 }

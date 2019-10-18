@@ -13,7 +13,7 @@ class Playlist implements PlaylistInterface
     protected $duration = 0;
 
     /** @var array */
-    protected $tracks;
+    protected $tracks = [];
 
     /**
      * @param TrackInterface $track
@@ -37,7 +37,7 @@ class Playlist implements PlaylistInterface
     /**
      * @return TrackInterface[]
      */
-    public function getTracks(): array
+    public function getTracks(): ?array
     {
         return $this->tracks;
     }

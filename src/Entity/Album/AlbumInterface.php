@@ -12,19 +12,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 interface AlbumInterface
 {
-    // get Tracklist Medium
-    public function getMedium(): MediumInterface;
+    // get Album Medium
+    public function getMedia(): array;
 
-    // get Tracklist title
+    // add Medium to Album media
+    public function addMedium(): self;
+
+    // get Album title
     public function getTitle(): string;
 
-    // get Tracklist Tracks
+    // get Album Tracks
     public function getTracks(): Collection;
 
-    // get Tracklist duration
+    // get Album duration
     public function getDuration(): int;
 
-    // get Tracklist artist
+    // get Album artist
     public function getArtist(): ArtistInterface;
 
 }

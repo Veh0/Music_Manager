@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Track;
+use App\Entity\Track\Track;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 

@@ -16,27 +16,27 @@ class Track implements TrackInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    protected $title;
 
     /**
      * @ORM\Column(type="int")
      */
-    private $duration;
+    protected $duration;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="tracks")
      */
-    private $artist;
+    protected $artist;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Album", inversedBy="tracks")
      */
-    private $album;
+    protected $album;
 
     public function getId(): ?int
     {

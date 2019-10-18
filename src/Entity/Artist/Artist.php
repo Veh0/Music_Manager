@@ -18,27 +18,27 @@ class Artist implements ArtistInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    protected $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $style;
+    protected $style;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Track", mappedBy="artist")
      */
-    private $tracks;
+    protected $tracks;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Album", mappedBy="artist")
      */
-    private $albums;
+    protected $albums;
 
     public function __construct()
     {

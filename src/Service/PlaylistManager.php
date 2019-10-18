@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use App\Entity\Media\MediumInterface;
 use App\Entity\Playlist\Playlist;
 use App\Entity\Playlist\PlaylistInterface;
 use App\Gateway\PlaylistGateway;
@@ -19,33 +20,41 @@ class PlaylistManager
     }
 
     /**
-     * @param $limit
+     * @param int $limit
      * @return PlaylistInterface
      */
-    public function limitedDurationPlaylist($limit)
+    public function limitedDurationPlaylist(int $limit): ?PlaylistInterface
     {
         $playlist = new Playlist();
 
-        $fetchTracks = $this->playlistGateway->findTracks();
-        $random = rand(0, count($fetchTracks));
+        $fetchTracks = $this->playlistGateway->fetchAllTracks();
+        $random = rand(0, count($fetchTracks)-1);
+
+        dump($fetchTracks);
 
         while($playlist->getDuration() < $limit)
         {
-            $playlist->addTrack($fetchTracks[$random]);
+            $track = $fetchTracks[$random];
+
+            if (($playlist->getDuration() + $track->getDuration()) > $limit) {
+                break;
+            }
+
+            $playlist->addTrack($track);
         }
 
         return $playlist;
     }
 
     /**
-     * @param $limit
+     * @param int $limit
      * @return PlaylistInterface
      */
-    public function limitedCountPlaylist($limit)
+    public function limitedCountPlaylist(int $limit): ?PlaylistInterface
     {
         $playlist = new Playlist();
 
-        $fetchTracks = $this->playlistGateway->findAllTracks();
+        $fetchTracks = $this->playlistGateway->fetchAllTracks();
         $random = rand(0, count($fetchTracks)-1);
 
         while(count($playlist->getTracks()) < $limit)
@@ -57,34 +66,45 @@ class PlaylistManager
     }
 
     /**
-     * @return Playlist
+     * @return PlaylistInterface
      */
-    public function fullAlbumPlaylist()
+    public function fullAlbumPlaylist(): ?PlaylistInterface
     {
         $playlist = new Playlist();
 
-        $fetchAlbums = $this->playlistGateway->findAllAlbums();
+        $fetchAlbums = $this->playlistGateway->fetchAllAlbums();
 
-        foreach ($fetchAlbums as $album => $track)
+        foreach ($fetchAlbums as $album)
         {
-            $playlist->addTrack($track);
+            $albums = $album->getTracks();
+
+            foreach ($albums as $track)
+            {
+                $playlist->addTrack($track);
+            }
         }
 
         return $playlist;
     }
 
     /**
-     * @param $medium
+     * @param mediumInterface $medium
      * @return PlaylistInterface
      */
-    public function limitedMediumPlaylist($medium)
+    public function limitedMediumPlaylist(MediumInterface $medium): PlaylistInterface
     {
         $playlist = new Playlist();
 
-        $fetchTracks = $this->playlistGateway->findTracksByMedium($medium);
+        $fetchAlbums = $this->playlistGateway->fetchAlbumsByMedium($medium);
 
-        foreach ($fetchTracks as $track) {
-            $playlist->addTrack($track);
+        foreach ($fetchAlbums as $album)
+        {
+            $albums = $album->getTracks();
+
+            foreach ($albums as $track)
+            {
+                $playlist->addTrack($track);
+            }
         }
 
         return $playlist;
