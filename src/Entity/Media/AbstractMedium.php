@@ -11,6 +11,9 @@ class AbstractMedium implements MediumInterface
     /** @var float */
     protected $price;
 
+    /** @var string */
+    protected $type;
+
     /** @var AlbumInterface */
     protected $album;
 
@@ -45,6 +48,23 @@ class AbstractMedium implements MediumInterface
     {
         $this->album = $album;
     }
+
+    /**
+     * @return string
+     */
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     */
+    public function setType(string $type): void
+    {
+        $this->type = $type;
+    }
+
 
 
 }
