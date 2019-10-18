@@ -29,36 +29,6 @@ class HomeController extends AbstractController {
     {
         $title = "Home";
 
-        $filename = 'tracks.xls';
-
-        $artist = new Artist();
-        $artist->setName('artist');
-
-        $album = new Album();
-        $album->setTitle('testAlbum');
-
-        $a = new Track();
-        $a->setTitle('test1')
-          ->setAlbum($album)
-          ->setArtist($artist)
-          ->setDuration(220)
-          ->addMedium(new CD());
-        $a->addMedium(new Vinyle());
-        $ba = new Track();
-        $ba->setTitle('test2')
-            ->setAlbum($album)
-            ->setArtist($artist)
-            ->setDuration(120)
-            ->addMedium(new Digital());
-        $ba->addMedium(new Vinyle());
-        $ac = new Track();
-        $ac->setTitle('test3')
-            ->setAlbum($album)
-            ->setArtist($artist)
-            ->setDuration(200)
-            ->addMedium(new Digital());
-        $ac->addMedium(new CD());
-
         return $this -> render("base.html.twig", [
             "page_title" => $title
         ]);
