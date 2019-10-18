@@ -15,6 +15,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class TrackManager
 {
+    use ExportTrait;
+
     /** @var TrackGateway */
     protected $trackGateway;
 
@@ -32,68 +34,24 @@ class TrackManager
         return $this->trackGateway->fetchMediaByTrackTitle($title);
     }
 
-    /** create a Csv file */
-    public function exportToCsv()
+    /**
+     * @param string $file
+     * @throws Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * Create a file which contains all Track
+     */
+    public function export(string $file)
     {
         $fetchTracks = $this->trackGateway->fetchAll();
 
-        $fp = fopen('tracks.csv', 'w');
-
-        foreach ($fetchTracks as $track)
+        switch (true)
         {
-            fputcsv($fp, (array) $track);
+            case $file == 'csv':
+                $this->toCsv($fetchTracks);
+                break;
+            case $file == 'xls':
+                $this->toXls($fetchTracks);
+                break;
         }
-
-        fclose($fp);
-    }
-
-    /** create a Xls file */
-    public function exportToXls()
-    {
-        $fetchTracks = $this->trackGateway->fetchAll();
-
-        $filename = 'tracks.xls';
-
-        $spreadsheet = new Spreadsheet();
-        $spreadsheet->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'Title')
-            ->setCellValue('B1', 'Album')
-            ->setCellValue('C1', 'Artist')
-            ->setCellValue('D1', 'Duration')
-            ->setCellValue('E1', 'Media');
-
-        $firstCellsStyle = [
-            'font' => ['bold' => true],
-            'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER],
-            'borders' => ['bottom' => ['styles' => Border::BORDER_MEDIUM]]
-        ];
-        try {
-            $spreadsheet->getActiveSheet()->getStyle('A1:E1')->applyFromArray($firstCellsStyle);
-        } catch (Exception $e) {
-        }
-
-        $i = 2;
-
-        foreach ($fetchTracks as $track)
-        {
-            $media = $track->getMedia();
-            foreach ($media as $medium)
-            {
-                $arrayMedia[] = $medium->getType();
-            }
-            $spreadsheet->setActiveSheetIndex(0)
-                ->setCellValue('A'.$i, $track->getTitle())
-                ->setCellValue('B'.$i, $track->getAlbum()->getTitle())
-                ->setCellValue('C'.$i, $track->getArtist()->getName())
-                ->setCellValue('D'.$i, $track->getDuration())
-                ->setCellValue('E'.$i,implode(" / ", $arrayMedia));
-
-            $i++;
-            $arrayMedia = [];
-        }
-
-        $writer = new Xls($spreadsheet);
-        $writer->save($filename);
-
     }
 }
