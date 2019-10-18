@@ -48,10 +48,10 @@ class TrackManager
         {
             case $file == 'csv':
                 $this->toCsv($fetchTracks);
-                break;
+            break;
             case $file == 'xls':
                 $this->toXls($fetchTracks);
-                break;
+            break;
         }
     }
 }
