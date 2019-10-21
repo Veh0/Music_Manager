@@ -4,7 +4,7 @@
 namespace App\Service\Export;
 
 
-class ExportManagerException
+class ExportManagerException extends \Exception
 {
 
 }

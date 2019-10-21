@@ -4,35 +4,35 @@
 namespace App\Service\Playlist\Generator;
 
 
-use App\Gateway\PlaylistGateway;
+use App\Gateway\TrackGateway;
 
 abstract class AbstractPlaylistGenerator implements PlaylistGeneratorInterface
 {
 
-    /** @var PlaylistGateway */
+    /** @var TrackGateway */
     protected $playlistGateway;
 
     /**
      * AbstractPlaylistGenerator constructor.
-     * @param PlaylistGateway $playlistGateway
+     * @param TrackGateway $playlistGateway
      */
-    public function __construct(PlaylistGateway $playlistGateway)
+    public function __construct(TrackGateway $playlistGateway)
     {
         $this->playlistGateway = $playlistGateway;
     }
 
     /**
-     * @return PlaylistGateway
+     * @return TrackGateway
      */
-    public function getPlaylistGateway(): PlaylistGateway
+    public function getPlaylistGateway(): TrackGateway
     {
         return $this->playlistGateway;
     }
 
     /**
-     * @param PlaylistGateway $playlistGateway
+     * @param TrackGateway $playlistGateway
      */
-    public function setPlaylistGateway(PlaylistGateway $playlistGateway): void
+    public function setPlaylistGateway(TrackGateway $playlistGateway): void
     {
         $this->playlistGateway = $playlistGateway;
     }

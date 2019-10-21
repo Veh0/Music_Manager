@@ -25,5 +25,5 @@ interface PlaylistGeneratorInterface
      */
     public function generate(array $criteria) : PlaylistInterface;
 
-    public function getPriority() : int;
+    //public function getPriority() : int;
 }

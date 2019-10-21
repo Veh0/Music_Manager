@@ -11,7 +11,7 @@ use App\Repository\ArtistRepository;
 use App\Repository\TrackRepository;
 
 
-class PlaylistGateway
+class TrackGateway
 {
     /** @var TrackRepository */
     protected $trackRepository;

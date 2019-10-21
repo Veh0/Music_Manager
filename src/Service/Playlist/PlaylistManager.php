@@ -7,20 +7,20 @@ namespace App\Service\Playlist;
 use App\Entity\Media\MediumInterface;
 use App\Entity\Playlist\Playlist;
 use App\Entity\Playlist\PlaylistInterface;
-use App\Gateway\PlaylistGateway;
+use App\Gateway\TrackGateway;
 use App\Service\Playlist\Generator\DurationLimitedPlaylistGenerator;
 use App\Service\Playlist\Generator\PlaylistGeneratorInterface;
 use App\Service\Playlist\Generator\StyleAndDurationLimitedPlaylistGenerator;
 
 class PlaylistManager
 {
-    /** @var PlaylistGateway */
+    /** @var TrackGateway */
     protected $playlistGateway;
 
     /** @var PlaylistGeneratorInterface[] */
     protected $playlistGenerators = [];
 
-    public function __construct(PlaylistGateway $playlistGateway)
+    public function __construct(TrackGateway $playlistGateway)
     {
         $this->playlistGateway = $playlistGateway;
 
