@@ -3,36 +3,50 @@
 
 namespace App\Gateway;
 
-
+use App\Entity\Album\AlbumInterface;
 use App\Entity\Media\MediumInterface;
 use App\Entity\Track\TrackInterface;
+use App\Repository\AlbumRepository;
+use App\Repository\ArtistRepository;
 use App\Repository\TrackRepository;
 
-class TrackGateway
+
+class PlaylistGateway
 {
     /** @var TrackRepository */
     protected $trackRepository;
 
-    public function __construct($trackRepository)
+    /** @var AlbumRepository */
+    protected $albumRepository;
+
+    /** @var ArtistRepository */
+    protected $artistRepository;
+
+    public function __construct(TrackRepository $trackRepository, AlbumRepository $albumRepository, ArtistRepository $artistRepository)
     {
         $this->trackRepository = $trackRepository;
+        $this->albumRepository = $albumRepository;
+        $this->artistRepository = $artistRepository;
     }
 
-    /**
-     * @return TrackInterface[]
-     */
-    public function fetchAll() {
+    /** @return TrackInterface[] */
+    public function fetchAllTracks(): ?array
+    {
         return $this->trackRepository->findAll();
     }
 
-    /**
-     * @param string $title
-     * @return MediumInterface[]
-     */
-    public function fetchMediaByTrackTitle($title)
+    /** @return AlbumInterface[] */
+    public function fetchAllAlbums(): ?array
     {
-        return $this->trackRepository->findMediaByTitle($title);
+        return $this->albumRepository->findAll();
     }
 
-
+    /**
+     * @param MediumInterface[] $media
+     * @return AlbumInterface[]
+     */
+    public function fetchAlbumsByMedium(array $media): ?array
+    {
+        return $this->albumRepository->findByMedia($media);
+    }
 }
