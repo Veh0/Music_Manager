@@ -77,7 +77,7 @@ class AlbumTest extends TestCase
         $album->addTrack($b);
         $album->removeTrack($a);
         // ASSERT
-        $this->assertEquals(array($b), $album->getTracks());
+        $this->assertEquals(array($b), $album->getTracks()->toArray());
         $this->assertEquals(205, $album->getDuration());
     }
 }

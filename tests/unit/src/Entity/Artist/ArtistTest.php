@@ -53,7 +53,7 @@ class ArtistTest extends TestCase
                ->addAlbum($delAlbum)
                ->removeAlbum($delAlbum);
         //ASSERT
-        $this->assertEquals(array($album), $artist->getAlbums());
+        $this->assertEquals(array($album), $artist->getAlbums()->toArray());
     }
 
     public function testTracksAccessors()
@@ -67,7 +67,7 @@ class ArtistTest extends TestCase
                ->addTrack($delTrack)
                ->removeTrack($delTrack);
         //ASSERT
-        $this->assertEquals(array($track), $artist->getTracks());
+        $this->assertEquals(array($track), $artist->getTracks()->toArray());
     }
 
 }

@@ -123,6 +123,7 @@ class Album implements AlbumInterface
     {
         if ($this->tracks->contains($track)) {
             $this->tracks->removeElement($track);
+            $this->tracks = new ArrayCollection($this->tracks->getValues());
             $this->duration -= $track->getDuration();
             // set the owning side to null (unless already changed)
             if ($track->getAlbum() === $this) {
