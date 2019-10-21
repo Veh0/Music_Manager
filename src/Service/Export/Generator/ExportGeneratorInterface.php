@@ -12,7 +12,7 @@ interface ExportGeneratorInterface
      * @param array $criteria
      * @return bool
      */
-    public function doesHandle(array $criteria) : bool;
+    public function doesHandle(array $criteria): bool;
 
     /**
      * @param array $criteria

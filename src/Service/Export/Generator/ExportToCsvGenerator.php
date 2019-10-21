@@ -29,12 +29,10 @@ class ExportToCsvGenerator extends AbstractExportGenerator
 
         $fp = fopen("tracks.csv", "w");
 
-        foreach ($data as $datum)
-        {
+        foreach ($data as $datum) {
             fputcsv($fp, $datum);
         }
 
         fclose($fp);
     }
-
 }
