@@ -16,15 +16,17 @@ class ExportManager
 
     /**
      * ExportManager constructor.
-     * @param ExportGeneratorInterface $generator
+     * @param ExportGeneratorInterface[] $generators
      */
-    public function __construct(ExportGeneratorInterface $generator)
+    public function __construct(ExportGeneratorInterface ...$generators)
     {
-        $this->registerGenerator($generator);
+        foreach($generators as $generator) $this->registerGenerator($generator);
     }
 
     /**
      * @param array $criteria
+     * @return mixed
+     * @throws \App\Service\Export\ExportManagerException
      */
     public function generateExport(array $criteria)
     {
@@ -32,11 +34,11 @@ class ExportManager
         {
             if ($generator->doesHandle($criteria))
             {
-                $generator->generate($criteria);
+                return $generator->generate($criteria);
             }
         }
 
-        //throw new ExportManagerException("nope");
+       throw new ExportManagerException("nope");
 
     }
 
