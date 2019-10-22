@@ -43,7 +43,7 @@ class Album implements AlbumInterface
     protected $duration;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="albums")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Artist\Artist", inversedBy="albums")
      */
     protected $artist;
 

@@ -6,7 +6,7 @@ namespace App\Service\Export\Generator;
 
 use App\Service\Export\ExportManagerException;
 
-class ExportToCsvGenerator extends AbstractExportGenerator
+class CsvGenerator extends AbstractExportGenerator
 {
     /**
      * @param array $criteria

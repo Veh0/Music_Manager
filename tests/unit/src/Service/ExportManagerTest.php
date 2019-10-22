@@ -16,8 +16,8 @@ use App\Repository\AlbumRepository;
 use App\Repository\ArtistRepository;
 use App\Repository\TrackRepository;
 use App\Service\Export\ExportManager;
-use App\Service\Export\Generator\ExportToCsvGenerator;
-use App\Service\Export\Generator\ExportToXlsGenerator;
+use App\Service\Export\Generator\CsvGenerator;
+use App\Service\Export\Generator\XlsGenerator;
 use Codeception\PHPUnit\TestCase;
 
 class ExportManagerTest extends TestCase
@@ -59,7 +59,7 @@ class ExportManagerTest extends TestCase
             ->willReturn($data);
         // RUN
         $criteria['format'] = "csv";
-        $exportManager = new ExportManager(new ExportToCsvGenerator($this->trackGateway));
+        $exportManager = new ExportManager(new CsvGenerator($this->trackGateway));
         $exportManager->generateExport($criteria);
         // ASSERT
         //$this->assertFileEquals('public/file.csv', 'tracks.csv');
@@ -88,7 +88,7 @@ class ExportManagerTest extends TestCase
             ->willReturn($data);
         // RUN
         $criteria['format'] = 'xls';
-        $exportManager = new ExportManager(new ExportToXlsGenerator($this->trackGateway));
+        $exportManager = new ExportManager(new XlsGenerator($this->trackGateway));
         $exportManager->generateExport($criteria);
 
         // ASSERT

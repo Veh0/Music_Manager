@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\DependencyInjection\ExportManagerPass;
+use App\DependencyInjection\PlaylistManagerPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
@@ -14,6 +16,12 @@ class Kernel extends BaseKernel
     use MicroKernelTrait;
 
     private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
+
+    public function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new ExportManagerPass());
+        $container->addCompilerPass(new PlaylistManagerPass());
+    }
 
     public function registerBundles(): iterable
     {

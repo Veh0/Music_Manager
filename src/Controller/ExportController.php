@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ExportController extends AbstractController
 {
     /**
-     * @Route("/export")
+     * @Route(path="/export")
      * @param ExportManager $exportManager
      * @return Response
      */

@@ -11,7 +11,7 @@ use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
-class ExportToXlsGenerator extends  AbstractExportGenerator
+class XlsGenerator extends  AbstractExportGenerator
 {
     /**
      * @param array $criteria

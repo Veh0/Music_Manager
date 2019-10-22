@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\Artist;
+use App\Entity\Artist\Artist;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
