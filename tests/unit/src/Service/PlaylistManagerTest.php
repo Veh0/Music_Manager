@@ -13,7 +13,7 @@ use App\Gateway\TrackGateway;
 use App\Repository\AlbumRepository;
 use App\Repository\ArtistRepository;
 use App\Repository\TrackRepository;
-use App\Service\PlaylistManager;
+use App\Service\Playlist\PlaylistManager;
 use Codeception\PHPUnit\TestCase;
 
 class PlaylistManagerTest extends TestCase

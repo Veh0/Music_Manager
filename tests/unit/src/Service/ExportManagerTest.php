@@ -50,6 +50,7 @@ class ExportManagerTest extends TestCase
     /**
      * @dataProvider csvProvider
      * @param array $data
+     * @throws ExportManagerException
      */
     public function testExportToCsvGenerator(array $data)
     {
@@ -57,7 +58,7 @@ class ExportManagerTest extends TestCase
         $this->trackRepository->method('findAll')
             ->willReturn($data);
         // RUN
-        $criteria['csv'] = 1;
+        $criteria['format'] = "csv";
         $exportManager = new ExportManager(new ExportToCsvGenerator($this->trackGateway));
         $exportManager->generateExport($criteria);
         // ASSERT
@@ -86,7 +87,7 @@ class ExportManagerTest extends TestCase
         $this->trackRepository->method('findAll')
             ->willReturn($data);
         // RUN
-        $criteria['xls'] = 1;
+        $criteria['format'] = 'xls';
         $exportManager = new ExportManager(new ExportToXlsGenerator($this->trackGateway));
         $exportManager->generateExport($criteria);
 

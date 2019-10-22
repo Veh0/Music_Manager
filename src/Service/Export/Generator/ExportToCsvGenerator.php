@@ -14,7 +14,7 @@ class ExportToCsvGenerator extends AbstractExportGenerator
      */
     public function doesHandle(array $criteria): bool
     {
-        return !empty($criteria["csv"]);
+        return !empty($criteria["format"] == "csv");
     }
 
     /**
