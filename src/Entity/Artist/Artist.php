@@ -31,12 +31,12 @@ class Artist implements ArtistInterface
     protected $style;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Track", mappedBy="artist")
+     * @ORM\OneToMany(targetEntity="App\Entity\Track\Track", mappedBy="artist")
      */
     protected $tracks;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Album", mappedBy="artist")
+     * @ORM\OneToMany(targetEntity="App\Entity\Album\Album", mappedBy="artist")
      */
     protected $albums;
 

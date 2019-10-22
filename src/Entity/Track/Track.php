@@ -36,12 +36,12 @@ class Track implements TrackInterface
     protected $duration;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Artist", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Artist\Artist", inversedBy="tracks")
      */
     protected $artist;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Album", inversedBy="tracks")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Album\Album", inversedBy="tracks")
      */
     protected $album;
 

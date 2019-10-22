@@ -33,7 +33,7 @@ class Album implements AlbumInterface
     protected $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Track", mappedBy="album")
+     * @ORM\OneToMany(targetEntity="App\Entity\Track\Track", mappedBy="album")
      */
     protected $tracks;
 

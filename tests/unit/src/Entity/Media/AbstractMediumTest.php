@@ -6,6 +6,9 @@ namespace App\Tests\unit\src\Entity\Media;
 
 use App\Entity\Album\Album;
 use App\Entity\Media\AbstractMedium;
+use App\Entity\Media\CD;
+use App\Entity\Media\Digital;
+use App\Entity\Media\Vinyle;
 use Codeception\PHPUnit\TestCase;
 
 class AbstractMediumTest extends TestCase
@@ -34,7 +37,13 @@ class AbstractMediumTest extends TestCase
         $medium = $this->getMockForAbstractClass(AbstractMedium::class);
         // RUN
         $medium->setType('type');
+        $cd = new CD();
+        $vinyle = new Vinyle();
+        $file = new Digital();
         // ASSERT
         $this->assertEquals('type', $medium->getType());
+        $this->assertEquals('CD', $cd->getType());
+        $this->assertEquals('Vinyle', $vinyle->getType());
+        $this->assertEquals('File', $file->getType());
     }
 }
