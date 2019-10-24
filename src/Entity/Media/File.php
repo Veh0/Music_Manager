@@ -4,10 +4,12 @@
 namespace App\Entity\Media;
 
 
-class Digital extends AbstractMedium
+class File extends Medium
 {
     public function __construct()
     {
-        $this->type = 'File';
+        parent::__construct();
+        $this->setType('File');
+        $this->setId(4);
     }
 }

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AbstractMediumRepository")
  */
-abstract class AbstractMedium implements MediumInterface
+class Medium implements MediumInterface
 {
     /**
      * @ORM\Id()

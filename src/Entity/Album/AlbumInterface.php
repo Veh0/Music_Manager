@@ -13,10 +13,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 interface AlbumInterface
 {
     // get Album Medium
-    public function getMedia(): array;
+    //public function getMedia(): array;
 
     // add Medium to Album media
-    public function addMedium(MediumInterface $medium);
+    //public function addMedium(MediumInterface $medium);
 
     // get Album title
     public function getTitle(): string;

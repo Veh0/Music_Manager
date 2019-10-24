@@ -74,24 +74,6 @@ class Track implements TrackInterface
     }
 
     /**
-     * @return MediumInterface[]
-     */
-    public function getMedia(): array
-    {
-        return $this->media;
-    }
-
-    /**
-     * @return Track
-     */
-    public function addMedium()
-    {
-        $this->media[] = $this->getAlbum()->getMedia();
-
-        return $this;
-    }
-
-    /**
      * @return int|null
      */
     public function getDuration(): ?int
@@ -144,6 +126,24 @@ class Track implements TrackInterface
     public function setAlbum(?AlbumInterface $album): self
     {
         $this->album = $album;
+
+        return $this;
+    }
+
+    /**
+     * @return MediumInterface[]
+     */
+    public function getMedia(): array
+    {
+        return $this->media;
+    }
+
+    /**
+     * @return Track
+     */
+    public function addMedium()
+    {
+        $this->media = $this->getAlbum()->getMedia();
 
         return $this;
     }

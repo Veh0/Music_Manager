@@ -3,6 +3,7 @@
 namespace App\Entity\Album;
 
 use App\Entity\Artist\ArtistInterface;
+use App\Entity\Media\Medium;
 use App\Entity\Media\MediumInterface;
 use App\Entity\Track\TrackInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -21,11 +22,6 @@ class Album implements AlbumInterface
      */
     protected $id;
 
-    /**
-     * @ORM\Column(type="array")
-     * @var MediumInterface[]
-     */
-    protected $media;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -47,32 +43,21 @@ class Album implements AlbumInterface
      */
     protected $artist;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Media\Medium", inversedBy="albums")
+     */
+    protected $media;
+
     public function __construct()
     {
         $this->tracks = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     /** @return int|null */
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /** @return array */
-    public function getMedia(): array
-    {
-        return $this->media;
-    }
-
-    /**
-     * @param MediumInterface $medium
-     * @return $this
-     */
-    public function addMedium(MediumInterface $medium): self
-    {
-        $this->media[] = $medium->getType();
-
-        return $this;
     }
 
     /** @return string */
@@ -164,6 +149,32 @@ class Album implements AlbumInterface
     public function setArtist(?ArtistInterface $artist): self
     {
         $this->artist = $artist;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Medium[]
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Medium $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media[] = $medium;
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Medium $medium): self
+    {
+        if ($this->media->contains($medium)) {
+            $this->media->removeElement($medium);
+        }
 
         return $this;
     }

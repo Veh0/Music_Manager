@@ -5,7 +5,7 @@ namespace App\Tests\unit\src\Service;
 
 
 use App\Entity\Media\CD;
-use App\Entity\Media\Digital;
+use App\Entity\Media\File;
 use App\Entity\Media\Vinyle;
 use App\Entity\Track\Track;
 use App\Gateway\TrackGateway;
@@ -31,7 +31,7 @@ class TrackManagerTest extends TestCase
     {
        /* // PREPARE
         $cd = new CD();
-        $digital = new Digital();
+        $digital = new File();
 
         $track = new Track();
         $track->setTitle('test');

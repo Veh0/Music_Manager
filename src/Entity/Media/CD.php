@@ -4,10 +4,12 @@
 namespace App\Entity\Media;
 
 
-class CD extends AbstractMedium
+class CD extends Medium
 {
     public function __construct()
     {
-        $this->type = 'CD';
+        parent::__construct();
+        $this->setType('CD');
+        $this->setId(1);
     }
 }

@@ -4,10 +4,12 @@
 namespace App\Entity\Media;
 
 
-class Vinyle extends AbstractMedium
+class Vinyle extends Medium
 {
     public function __construct()
     {
-        $this->type = 'Vinyle';
+        parent::__construct();
+        $this->setType('Vinyle');
+        $this->setId(2);
     }
 }

@@ -26,7 +26,10 @@ class StyleAndDurationLimitedPlaylistGenerator extends AbstractPlaylistGenerator
         {
             $track = $fetchTracks[$random];
 
-            if ($playlist->getDuration() + $track()->getDuration() > $criteria['max_duration']) break;
+            if (($playlist->getDuration() + $track->getDuration()) > $criteria['max_duration'])
+            {
+                break;
+            }
 
             $playlist->addTrack($track);
         }

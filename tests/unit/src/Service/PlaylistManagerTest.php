@@ -5,7 +5,9 @@ namespace App\Tests\unit\src\Service;
 
 
 use App\Entity\Album\Album;
+use App\Entity\Artist\Artist;
 use App\Entity\Media\CD;
+use App\Entity\Media\File;
 use App\Entity\Media\Vinyle;
 use App\Entity\Track\Track;
 use App\Entity\Track\TrackInterface;
@@ -13,7 +15,10 @@ use App\Gateway\TrackGateway;
 use App\Repository\AlbumRepository;
 use App\Repository\ArtistRepository;
 use App\Repository\TrackRepository;
+use App\Service\Playlist\Generator\CountLimitedPlaylistGenerator;
+use App\Service\Playlist\Generator\StyleAndDurationLimitedPlaylistGenerator;
 use App\Service\Playlist\PlaylistManager;
+use App\Service\Playlist\PlaylistManagerException;
 use Codeception\PHPUnit\TestCase;
 
 class PlaylistManagerTest extends TestCase
@@ -36,112 +41,94 @@ class PlaylistManagerTest extends TestCase
     /**
      * @var TrackGateway
      */
-    protected $playlistGateway;
+    protected $trackGateway;
 
-    /*public function setUp(): void
+    public function setUp(): void
     {
         $this->albumRepository = $this->createMock(AlbumRepository::class);
         $this->trackRepository = $this->createMock(TrackRepository::class);
         $this->artistRepository = $this->createMock(ArtistRepository::class);
-        $this->playlistGateway = new TrackGateway($this->trackRepository, $this->albumRepository, $this->artistRepository);
+        $this->trackGateway = new TrackGateway($this->trackRepository, $this->albumRepository, $this->artistRepository);
     }
 
-    public function testLimitedDurationPlaylist()
+    /**
+     * @dataProvider getData
+     * @param array $tracks
+     * @throws PlaylistManagerException
+     */
+    public function testLimitedCountPlaylistGenerator($trackCountryCd, $trackRapFile, $trackRapCd)
     {
         // PREPARE
-        $a = new Track();
-        $a->setDuration(110);
-        $b = new Track();
-        $b->setDuration(150);
-        $c = new Track();
-        $c->setDuration(220);
-
         $this->trackRepository->method("findAll")
-                              ->willReturn(array($a,$b,$c));
-        // RUN
-        $playlistManager = new PlaylistManager($this->playlistGateway);
-        $playlist = $playlistManager->limitedDurationPlaylist(180);
+            ->willReturn(array($trackCountryCd, $trackRapFile, $trackRapCd));
+        //RUN
+        $playlistManager = new PlaylistManager(new CountLimitedPlaylistGenerator($this->trackGateway));
+        $criteria['max_count'] = 2;
+        $playlist = $playlistManager->generatePlaylist($criteria);
         // ASSERT
-        $this->assertLessThanOrEqual(180, $playlist->getDuration());
+        $this->assertLessThanOrEqual(2, count($playlist->getTracks()));
     }
 
-    public function testLimitedCountPlaylist()
+    /**
+     * @dataProvider getData
+     * @param array $tracks
+     * @throws PlaylistManagerException
+     */
+    public function testLimitedStyleAndDurationPlaylistGenerator($trackCountryCd, $trackRapFile, $trackRapCd)
     {
         // PREPARE
-        $a = new Track();
-        $a->setDuration(110);
-        $b = new Track();
-        $b->setDuration(150);
-        $c = new Track();
-        $c->setDuration(220);
-
-        $this->trackRepository->method("findAll")
-            ->willReturn(array($a,$b,$c));
-        // RUN
-        $playlistManager = new PlaylistManager($this->playlistGateway);
-        $playlist = $playlistManager->limitedCountPlaylist(2);
+        $this->trackRepository->method("findByArtistStyle")
+            ->with("Rap")
+            ->willReturn(array($trackRapFile, $trackRapCd));
+        //RUN
+        $playlistManager = new PlaylistManager(new StyleAndDurationLimitedPlaylistGenerator($this->trackGateway));
+        $criteria['style'] = "Rap";
+        $criteria['max_duration'] = 400;
+        $playlist = $playlistManager->generatePlaylist($criteria);
         // ASSERT
-        $this->assertEquals(2, count($playlist->getTracks()));
+        $this->assertLessThanOrEqual(1, count($playlist->getTracks()));
     }
 
-    public function testFullAlbumPlaylist()
+    /**
+     * @return array
+     */
+    public function getData()
     {
-        // PREPARE
-        $a = new Track();
-        $a->setDuration(110);
-        $b = new Track();
-        $b->setDuration(150);
-        $c = new Track();
-        $c->setDuration(220);
-        $d = new Track();
-        $d->setDuration(220);
+        $cdAlbum = new Album();
+        $cdAlbum->addMedium(new CD());
+        $fileAlbum = new Album();
+        $fileAlbum->addMedium(new File());
 
-        $firstAlbum = new Album();
-        $firstAlbum->addTrack($a)
-                   ->addTrack($b);
-        $secondAlbum = new Album();
-        $secondAlbum->addTrack($d);
+        $countryArtist = new Artist();
+        $countryArtist->setStyle("Country")
+                    ->setName('test');
+        $rapArtist = new Artist();
+        $rapArtist->setStyle("Rap")
+                ->setName('test');
 
-        $this->albumRepository->method("findAll")
-            ->willReturn(array($firstAlbum,$secondAlbum));
-        // RUN
-        $playlistManager = new PlaylistManager($this->playlistGateway);
-        $playlist = $playlistManager->fullAlbumPlaylist();
-        // ASSERT
-        $this->assertEquals(array($a, $b, $d), $playlist->getTracks());
+        $trackCountryCd = new Track();
+        $trackCountryCd->setTitle("test")
+            ->setDuration(120)
+            ->setArtist($countryArtist)
+            ->setAlbum($cdAlbum);
+
+        $trackRapFile = new Track();
+        $trackRapFile->setTitle("test2")
+            ->setDuration(240)
+            ->setArtist($rapArtist)
+            ->setAlbum($fileAlbum);
+
+        $trackRapCd = new Track();
+        $trackRapCd->setTitle("test3")
+            ->setDuration(310)
+            ->setArtist($rapArtist)
+            ->setAlbum($cdAlbum);
+
+        return [
+            [
+                $trackCountryCd, $trackRapCd, $trackRapFile
+            ]
+        ];
     }
-
-    public function testLimitedMediumPlaylist()
-    {
-        // PREPARE
-        $a = new Track();
-        $a->setDuration(110);
-        $b = new Track();
-        $b->setDuration(150);
-        $c = new Track();
-        $c->setDuration(220);
-        $d = new Track();
-        $d->setDuration(220);
-
-        $vinyle = new Vinyle();
-        $cd = new CD();
-
-        $firstAlbum = new Album();
-        $firstAlbum->addTrack($a)
-                   ->addTrack($b)
-                   ->addMedium($vinyle);
-        $secondAlbum = new Album();
-        $secondAlbum->addTrack($d)
-                    ->addMedium($cd);
-
-        $this->albumRepository->method("findByMedia")
-            ->with(array($vinyle))
-            ->willReturn(array($firstAlbum));
-        // RUN
-        $playlistManager = new PlaylistManager($this->playlistGateway);
-        $playlist = $playlistManager->limitedMediumPlaylist(array($vinyle));
-        // ASSERT
-        $this->assertEquals(array($a, $b), $playlist->getTracks());
-    }*/
 
 }

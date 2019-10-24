@@ -6,7 +6,7 @@ namespace App\Tests\unit\src\Entity\Track;
 
 use App\Entity\Album\Album;
 use App\Entity\Artist\Artist;
-use App\Entity\Media\AbstractMedium;
+use App\Entity\Media\Medium;
 use App\Entity\Media\Vinyle;
 use App\Entity\Track\Track;
 use Codeception\PHPUnit\TestCase;

@@ -7,9 +7,11 @@ namespace App\DataFixtures;
 use App\Entity\Album\Album;
 use App\Entity\Artist\Artist;
 use App\Entity\Media\CD;
-use App\Entity\Media\Digital;
+use App\Entity\Media\File;
 use App\Entity\Media\Vinyle;
 use App\Entity\Track\Track;
+use App\Entity\Media\Medium;
+use App\Repository\MediumRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
@@ -27,7 +29,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $media = array(new CD(), new Vinyle(), new Digital());
+        $media = $manager->getRepository(MediumRepository::class)->findAll();
         // TODO: Implement load() method.
         $faker = Factory::create();
 
@@ -58,13 +60,13 @@ class AppFixtures extends Fixture
 
             $artist->addAlbum($album);
 
-            self::loadTracks($manager, $album, $faker, $medium);
+            self::loadTracks($manager, $album, $faker);
 
             $manager->persist($album);
         }
     }
 
-    static function loadTracks(ObjectManager $manager, Album $album, $faker, $medium)
+    static function loadTracks(ObjectManager $manager, Album $album, $faker)
     {
         for ($i = 0; $i <= 12; $i++)
         {

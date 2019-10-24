@@ -6,7 +6,7 @@ namespace App\Tests\unit\src\Entity\Album;
 
 use App\Entity\Album\Album;
 use App\Entity\Artist\Artist;
-use App\Entity\Media\AbstractMedium;
+use App\Entity\Media\Medium;
 use App\Entity\Track\Track;
 use Codeception\PHPUnit\TestCase;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -48,7 +48,7 @@ class AlbumTest extends TestCase
     {
         // PREPARE
         $album = new Album;
-        $medium = $this->getMockForAbstractClass(AbstractMedium::class);
+        $medium = $this->getMockForAbstractClass(Medium::class);
         // RUN
         $album -> addMedium(new $medium);
         // ASSERT

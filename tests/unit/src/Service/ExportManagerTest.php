@@ -8,7 +8,7 @@ use App\Entity\Album\Album;
 use App\Service\Export\ExportManagerException;
 use App\Entity\Artist\Artist;
 use App\Entity\Media\CD;
-use App\Entity\Media\Digital;
+use App\Entity\Media\File;
 use App\Entity\Media\Vinyle;
 use App\Entity\Track\Track;
 use App\Gateway\TrackGateway;
@@ -101,14 +101,14 @@ class ExportManagerTest extends TestCase
         $artist1 = new Artist();
         $artist1->setName('artist');
         $album1 = new Album();
-        $album1->setTitle('testAlbum');
+        $album1->setTitle('testAlbum')
+            ->addMedium(new CD());
         $track1 = new Track();
         $track1->setTitle('test')
             ->setDuration(110)
             ->setArtist($artist1)
             ->setAlbum($album1);
-        $track1->addMedium(new CD());
-        $track1->addMedium(new Vinyle());
+        $track1->addMedium();
 
         $artist2 = new Artist();
         $artist2->setName('artist2');
@@ -117,8 +117,7 @@ class ExportManagerTest extends TestCase
             ->setDuration(210)
             ->setArtist($artist2)
             ->setAlbum($album1);
-        $track2->addMedium(new Digital());
-        $track2->addMedium(new CD());
+        $track2->addMedium();
 
         return [
             [
@@ -146,7 +145,7 @@ class ExportManagerTest extends TestCase
             ->setDuration(120)
             ->setArtist($artist)
             ->setAlbum($album);
-        $track2->addMedium(new Digital());
+        $track2->addMedium(new File());
         $track2->addMedium(new Vinyle());
 
         $track3 = new Track();
@@ -154,7 +153,7 @@ class ExportManagerTest extends TestCase
             ->setDuration(200)
             ->setArtist($artist)
             ->setAlbum($album);
-        $track3->addMedium(new Digital());
+        $track3->addMedium(new File());
         $track3->addMedium(new CD());
 
         return [

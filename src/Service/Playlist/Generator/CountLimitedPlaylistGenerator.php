@@ -11,7 +11,6 @@ class CountLimitedPlaylistGenerator extends AbstractPlaylistGenerator
 {
     public function doesHandle(array $criteria): bool
     {
-        // TODO: Implement doesHandle() method.
         return !empty($criteria['max_count']);
     }
 
