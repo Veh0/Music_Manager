@@ -35,6 +35,15 @@ class TrackGateway
         return $this->trackRepository->findAll();
     }
 
+    /**
+     * @param string $style
+     * @return array|null
+     */
+    public function fetchTracksByStyle(string $style): ?array
+    {
+        return $this->trackRepository->findByArtistStyle($style);
+    }
+
     /** @return AlbumInterface[] */
     public function fetchAllAlbums(): ?array
     {

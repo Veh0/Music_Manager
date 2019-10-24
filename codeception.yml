@@ -17,3 +17,7 @@ coverage:
         - src/*
     exclude:
         - var/*
+        - src/Controller
+        - src/Form
+        - src/DependencyInjection
+        - src/DataFixtures

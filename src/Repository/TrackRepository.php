@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Media\MediumInterface;
 use App\Entity\Track\Track;
+use App\Entity\Track\TrackInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -31,10 +32,25 @@ class TrackRepository extends ServiceEntityRepository
             ->andWhere('t.title = :val')
             ->setParameter('val', $title)
             ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
             ->getArrayResult()
         ;
+    }
+
+    /**
+     * @param
+     * @return Track[] Returns an array of TrackInterface objects
+     */
+    public function findByArtistStyle($style): ?array
+    {
+        return $this->createQueryBuilder('t')
+            ->join('t.artist', 'a')
+            ->andWhere('a.style = :val')
+            ->setParameter('val', $style)
+            ->orderBy('t.id', 'ASC')
+            ->getQuery()
+            ->getArrayResult()
+            ;
     }
 
 

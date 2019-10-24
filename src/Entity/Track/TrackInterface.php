@@ -10,15 +10,15 @@ interface TrackInterface
 {
 
     // get Track title
-    public function getTitle(): string;
+    public function getTitle(): ?string;
 
     // get Track Media
-    public function getMedia(): array;
+    public function getMedia(): ?array;
 
-    // add Medium to Track media
-    public function addMedium(MediumInterface $medium);
+    // add Album media to Track media
+    public function addMedium();
 
     // get Track duration
-    public function getDuration(): int;
+    public function getDuration(): ?int;
 
 }

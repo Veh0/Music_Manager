@@ -38,7 +38,7 @@ class Album implements AlbumInterface
     protected $tracks;
 
     /**
-     * @ORM\Column(type="int")
+     * @ORM\Column(type="integer")
      */
     protected $duration;
 
@@ -70,7 +70,7 @@ class Album implements AlbumInterface
      */
     public function addMedium(MediumInterface $medium): self
     {
-        $this->media[] = $medium;
+        $this->media[] = $medium->getType();
 
         return $this;
     }

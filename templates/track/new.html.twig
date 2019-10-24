@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h1>New Track</h1>
+    <a href="{{ path('index_track') }}" class="btn">Back</a>
+
+    {% include 'track/_form.html.twig' %}
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        a.btn {
+            margin: 2% 0;
+        }
+    </style>
+{% endblock %}

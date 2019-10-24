@@ -1,0 +1,24 @@
+{{ form_start(form) }}
+
+<div class="input-field col s6">
+    {{ form_widget(form.title, { 'attr': { 'id': 'title' } }) }}
+    {{ form_label(form.title, 'Title', { 'label_attr': { 'for': 'title' } }) }}
+</div>
+<div class="row">
+    <div class="input-field col s6">
+        {{ form_widget(form.artist, { 'attr': { 'id': 'artist', 'class': 'browser-default' } }) }}
+
+    </div>
+
+    <div class="input-field col s6">
+        {{ form_widget(form.album, { 'attr': { 'id': 'album', 'class': 'browser-default' } }) }}
+    </div>
+</div>
+
+<div class="input-field col s6">
+    {{ form_widget(form.duration, { 'attr': { 'id': 'duration' } }) }}
+    {{ form_label(form.duration, 'Duration', { 'label_attr': { 'for': 'duration' } }) }}
+</div>
+
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

@@ -4,6 +4,7 @@ namespace App\Entity\Track;
 
 use App\Entity\Album\AlbumInterface;
 use App\Entity\Artist\Artist;
+use App\Entity\Artist\ArtistInterface;
 use App\Entity\Media\MediumInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,7 +32,7 @@ class Track implements TrackInterface
     protected $media;
 
     /**
-     * @ORM\Column(type="int")
+     * @ORM\Column(type="integer")
      */
     protected $duration;
 
@@ -54,9 +55,9 @@ class Track implements TrackInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -81,17 +82,19 @@ class Track implements TrackInterface
     }
 
     /**
-     * @param MediumInterface $medium
+     * @return Track
      */
-    public function addMedium(MediumInterface $medium)
+    public function addMedium()
     {
-        $this->media[] = $medium;
+        $this->media[] = $this->getAlbum()->getMedia();
+
+        return $this;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getDuration(): int
+    public function getDuration(): ?int
     {
         return $this->duration;
     }
@@ -108,18 +111,18 @@ class Track implements TrackInterface
     }
 
     /**
-     * @return Artist
+     * @return Artist|null
      */
-    public function getArtist(): Artist
+    public function getArtist(): ?Artist
     {
         return $this->artist;
     }
 
     /**
-     * @param Artist|null $artist
+     * @param ArtistInterface $artist
      * @return $this
      */
-    public function setArtist(?Artist $artist): self
+    public function setArtist(ArtistInterface $artist): self
     {
         $this->artist = $artist;
 
@@ -127,9 +130,9 @@ class Track implements TrackInterface
     }
 
     /**
-     * @return AlbumInterface
+     * @return AlbumInterface|null
      */
-    public function getAlbum(): AlbumInterface
+    public function getAlbum(): ?AlbumInterface
     {
         return $this->album;
     }
