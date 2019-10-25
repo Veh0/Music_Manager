@@ -51,6 +51,21 @@ class TrackRepository extends ServiceEntityRepository
             ->getArrayResult();
     }
 
+    public function findWhere($where)
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        return $queryBuilder->select(array('t', 'a', 'm', 'art'))
+            ->from('App\Entity\Track\Track', 't')
+            ->innerJoin('t.album', 'a')
+            ->innerJoin('a.media', 'm')
+            ->innerJoin('t.artist', 'art')
+            ->where('t.title LIKE :val')
+            ->setParameter('val', $where)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
     /**
      * @param
      * @return Track[] Returns an array of TrackInterface objects

@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         {% for album in albums %}
-            <tr data-id="{{ album.title }}">
+            <tr data-entry-id="{{ album.title }}">
                 <td>{{ album.title }}</td>
                 <td>{{ album.artist.name }}</td>
                 <td>{{ album.duration|date('i:s') }}</td>
@@ -62,6 +62,46 @@
 
 {% block javascripts %}
     <script>
+        //** AUTOCOMPLETE SEARCHBAR **//
+        $(document).ready(function(){
+            var element = $('tr');
+            var elementId = $.map(element, item => $(item).data("entryId"));
+            console.log(elementId);
+
+            var obj = elementId.reduce(function(o, val) { o[val] = null; return o; }, {});
+            console.log(obj)
+            $('input.autocomplete').autocomplete({
+                data : obj
+            });
+        });
+
+        //** SEARCHBAR AJAX REQUEST WHERE CLAUSE **//
+        $('#autocomplete-input').keyup(function () {
+            let param = $(this).val()
+
+            var where_data = {
+                data: param,
+                entity: $('h1').text()
+            }
+
+            if(param != "")
+            {
+                $.post("{{ path('where_ajax') }}", where_data, function (fetchAlbum) {
+                    $("tbody").html("");
+
+                    for (let i = 0; i < fetchAlbum.length; i++) {
+                        let album = fetchAlbum[i];
+                        let int_seconds = album["duration"];
+                        let minutes = Math.floor(int_seconds/60);
+                        let seconds = Math.floor(int_seconds - minutes*60);
+                        if (minutes < 10) minutes = "0"+minutes;
+                        if (seconds < 10) seconds = "0"+seconds;
+                        let duration = minutes+":"+seconds;
+                        $("tbody").append('<tr><td>'+album["title"]+'</td><td>'+album["artist"]["name"]+'</td><td>'+duration+'</td><td>'+album["media"][0]["type"]+'</td></tr>');
+                    }
+                })
+            }
+        })
         //** ORDER AJAX REQUEST **//
         $('.order').click(function(e){
             var order = $(this).data("value");

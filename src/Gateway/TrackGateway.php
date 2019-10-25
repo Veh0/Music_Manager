@@ -35,15 +35,20 @@ class TrackGateway
         return $this->trackRepository->findAll();
     }
 
-    public function fetchOrderTracks(string $orderBy): ?array
+    public function fetchOrder(string $orderBy, string $entity): ?array
     {
-        return $this->trackRepository->findOrder($orderBy);
+        $repository = strtolower($entity)."Repository";
+        return $this->$repository->findOrder($orderBy);
     }
 
-    public function fetchOrderAlbums(string $orderBy): ?array
+
+    public function fetchWhere(string $where, string $entity): ?array
     {
-        return $this->albumRepository->findOrder($orderBy);
+        $repository = strtolower($entity)."Repository";
+        return $this->$repository->findWhere($where);
     }
+
+
 
     /**
      * @param string $style

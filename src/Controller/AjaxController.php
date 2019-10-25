@@ -26,10 +26,26 @@ class AjaxController extends AbstractController
 
         $entity = $request->request->get("entity");
 
-        $orderFunction = 'fetchOrder'.$entity.'s';
 
-        $fetchTracks = $trackGateway->$orderFunction($orderBy);
+        $fetchTracks = $trackGateway->fetchOrder($orderBy, $entity);
 
         return new JsonResponse($fetchTracks);
+    }
+
+    /**
+     * @Route("/where", name="where_ajax")
+     * @param Request $request
+     * @param TrackGateway $trackGateway
+     * @return JsonResponse
+     */
+    public function whereList(Request $request, TrackGateway $trackGateway)
+    {
+        $clauseValue = $request->request->get("data");
+
+        $entity = $request->request->get("entity");
+
+        $fetchItems = $trackGateway->fetchWhere($clauseValue."%", $entity);
+
+        return new JsonResponse($fetchItems);
     }
 }

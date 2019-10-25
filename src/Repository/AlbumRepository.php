@@ -48,6 +48,20 @@ class AlbumRepository extends ServiceEntityRepository
             ->getArrayResult();
     }
 
+    public function findWhere($where)
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        return $queryBuilder->select(array('a', 'm', 'art'))
+            ->from('App\Entity\Album\Album', 'a')
+            ->innerJoin('a.media', 'm')
+            ->innerJoin('a.artist', 'art')
+            ->where('a.title LIKE :val')
+            ->setParameter('val', $where)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
     /*
     public function findOneBySomeField($value): ?Album
     {

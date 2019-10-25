@@ -29,11 +29,11 @@
         </thead>
         <tbody>
         {% for track in tracks %}
-        <tr data-id="{{ track.title }}">
+        <tr data-entry-id="{{ track.title }}">
             <td>{{ track.title }}</td>
             <td>{{ track.artist.name }}</td>
             <td>{{ track.album.title }}</td>
-            <td>{{ track.duration }}</td>
+            <td>{{ track.duration|date("i:s") }}</td>
             <td>
                 {% for medium in track.album.media.toArray %}
                 {{ medium.type }}
@@ -64,6 +64,49 @@
 
 {% block javascripts %}
     <script>
+        //** AUTOCOMPLETE SEARCHBAR **//
+        $(document).ready(function(){
+            var element = $('tr');
+            var elementId = $.map(element, item => $(item).data("entryId"));
+            console.log(elementId);
+
+            var obj = elementId.reduce(function(o, val) { o[val] = null; return o; }, {});
+            console.log(obj)
+            $('input.autocomplete').autocomplete({
+                data : obj
+            });
+        });
+
+        //** SEARCHBAR AJAX REQUEST WHERE CLAUSE **//
+        $('#autocomplete-input').keyup(function () {
+            let param = $(this).val()
+
+            var where_data = {
+                data: param,
+                entity: $('h1').text()
+            }
+
+            console.log(where_data)
+
+            if(param != "")
+            {
+                $.post("{{ path('where_ajax') }}", where_data, function (fetchTracks) {
+                    $("tbody").html("");
+                    console.log(fetchTracks[0]);
+                    for (let i = 0; i < fetchTracks.length; i++) {
+                        let track = fetchTracks[i];
+                        let int_seconds = track["duration"];
+                        let minutes = Math.floor(int_seconds/60);
+                        let seconds = Math.floor(int_seconds - minutes*60);
+                        if (minutes < 10) minutes = "0"+minutes;
+                        if (seconds < 10) seconds = "0"+seconds;
+                        let duration = minutes+":"+seconds;
+                        $("tbody").append('<tr><td>'+track["title"]+'</td><td>'+track["artist"]["name"]+'</td><td>'+track["album"]["title"]+'</td><td>'+duration+'</td><td>'+track["album"]["media"][0]["type"]+'</td></tr>');
+                    }
+                })
+            }
+        })
+
         //** ORDER AJAX REQUEST **//
         $('.order').click(function(e){
             var order = $(this).data("value");
@@ -79,7 +122,13 @@
             console.log(fetchTracks[0]['title']);
             for (let i = 0; i < fetchTracks.length; i++) {
                 let track = fetchTracks[i];
-                $("tbody").append('<tr><td>'+track["title"]+'</td><td>'+track["artist"]["name"]+'</td><td>'+track["album"]["title"]+'</td><td>'+track["duration"]+'</td><td>'+track["album"]["media"][0]["type"]+'</td></tr>');
+                let int_seconds = track["duration"];
+                let minutes = Math.floor(int_seconds/60);
+                let seconds = Math.floor(int_seconds - minutes*60);
+                if (minutes < 10) minutes = "0"+minutes;
+                if (seconds < 10) seconds = "0"+seconds;
+                let duration = minutes+":"+seconds;
+                $("tbody").append('<tr><td>'+track["title"]+'</td><td>'+track["artist"]["name"]+'</td><td>'+track["album"]["title"]+'</td><td>'+duration+'</td><td>'+track["album"]["media"][0]["type"]+'</td></tr>');
             }
         })
         })
