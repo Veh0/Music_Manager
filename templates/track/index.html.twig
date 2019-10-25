@@ -4,4 +4,85 @@
 
 <h1>Track</h1>
 
+
+    <div class="row">
+        <div class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">search</i>
+                    <input type="search" id="autocomplete-input" class="autocomplete">
+                    <label for="autocomplete-input">Track Title</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table id="myTable" class="striped">
+        <thead>
+        <tr>
+            <th><a class="order" data-value="t.title">Title</a></th>
+            <th><a class="order" data-value="art.name">Artist</a></th>
+            <th><a class="order" data-value="a.title">Album</a></th>
+            <th><a class="order" data-value="t.duration">Duration</a></th>
+            <th><a class="order" data-value="m.id">Media</a></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for track in tracks %}
+        <tr data-id="{{ track.title }}">
+            <td>{{ track.title }}</td>
+            <td>{{ track.artist.name }}</td>
+            <td>{{ track.album.title }}</td>
+            <td>{{ track.duration }}</td>
+            <td>
+                {% for medium in track.album.media.toArray %}
+                {{ medium.type }}
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        table.striped>tbody>tr:nth-child(odd) {
+            background-color: rgba(0,150,136,0.1);
+        }
+
+        table thead th a {
+            color: #212121;
+        }
+        table thead th a:hover {
+            color: teal;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        //** ORDER AJAX REQUEST **//
+        $('.order').click(function(e){
+            var order = $(this).data("value");
+            e.preventDefault();
+            console.log(order);
+            var data = {
+                data: order,
+                entity: $('h1').text()
+            };
+            console.log(data);
+        $.post('{{ path("order_ajax") }}', data, function (fetchTracks) {
+            $("tbody").html("");
+            console.log(fetchTracks[0]['title']);
+            for (let i = 0; i < fetchTracks.length; i++) {
+                let track = fetchTracks[i];
+                $("tbody").append('<tr><td>'+track["title"]+'</td><td>'+track["artist"]["name"]+'</td><td>'+track["album"]["title"]+'</td><td>'+track["duration"]+'</td><td>'+track["album"]["media"][0]["type"]+'</td></tr>');
+            }
+        })
+        })
+
+    </script>
 {% endblock %}

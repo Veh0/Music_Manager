@@ -20,7 +20,7 @@ abstract class AbstractExportGenerator implements ExportGeneratorInterface
      */
     public function __construct(TrackGateway $trackGateway)
     {
-        $this->trackGateway = $trackGateway;
+        $this->setTrackGateway($trackGateway);
     }
 
     /**

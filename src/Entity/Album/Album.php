@@ -165,6 +165,7 @@ class Album implements AlbumInterface
     {
         if (!$this->media->contains($medium)) {
             $this->media[] = $medium;
+            $medium->addAlbum($this);
         }
 
         return $this;

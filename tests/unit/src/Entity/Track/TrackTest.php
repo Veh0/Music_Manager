@@ -7,7 +7,6 @@ namespace App\Tests\unit\src\Entity\Track;
 use App\Entity\Album\Album;
 use App\Entity\Artist\Artist;
 use App\Entity\Media\Medium;
-use App\Entity\Media\Vinyle;
 use App\Entity\Track\Track;
 use Codeception\PHPUnit\TestCase;
 
@@ -46,20 +45,15 @@ class TrackTest extends TestCase
     {
         // PREPARE
         $track = new Track();
+        $file = new Medium();
+        $file->setId($file::FILE)->setType();
+        $album = new Album();
+        $album->addMedium($file);
         // RUN
-        $track->setAlbum(new Album);
+        $track->setAlbum($album)->addMedium();
         //ASSERT
-        $this->assertEquals(new Album, $track->getAlbum());
-    }
-
-    public function testMediumAccessors()
-    {
-        // PREPARE
-        $track = new Track();
-        // RUN
-        $track -> addMedium(new Vinyle());
-        // ASSERT
-        $this -> assertEquals(array(new Vinyle()), $track->getMedia());
+        $this->assertEquals($album, $track->getAlbum());
+        $this->assertEquals(array($file), $track->getMedia()->toArray());
     }
 
     public function testTitleAccessors()

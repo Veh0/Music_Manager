@@ -27,6 +27,12 @@ class Medium implements MediumInterface
      */
     protected $type;
 
+    const CD = 1;
+
+    const VINYLE = 2;
+
+    const FILE = 4;
+
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Album\Album", mappedBy="media")
      */
@@ -47,10 +53,12 @@ class Medium implements MediumInterface
 
     /**
      * @param mixed $id
+     * @return Medium
      */
-    public function setId($id): void
+    public function setId($id): self
     {
         $this->id = $id;
+        return $this;
     }
 
 
@@ -63,11 +71,26 @@ class Medium implements MediumInterface
     }
 
     /**
-     * @param string $type
+     * @return Medium
      */
-    public function setType(string $type): void
+    public function setType(): self
     {
-        $this->type = $type;
+        switch ($this->getId())
+        {
+            case self::CD:
+                $this->type = "CD";
+                break;
+            case self::VINYLE:
+                $this->type = "Vinyle";
+                break;
+            case self::FILE:
+                $this->type = "File";
+                break;
+            default:
+                break;
+
+        }
+        return $this;
     }
 
     /**

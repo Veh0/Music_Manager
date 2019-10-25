@@ -29,7 +29,19 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        $media = $manager->getRepository(MediumRepository::class)->findAll();
+        $cd = new Medium();
+        $cd->setId($cd::CD)->setType();
+        $manager->persist($cd);
+
+        $vinyle = new Medium();
+        $vinyle->setId($vinyle::VINYLE)->setType();
+        $manager->persist($vinyle);
+
+        $file = new Medium();
+        $file->setId($file::FILE)->setType();
+        $manager->persist($file);
+
+        $media = array($cd, $vinyle, $file);
         // TODO: Implement load() method.
         $faker = Factory::create();
 
@@ -53,10 +65,8 @@ class AppFixtures extends Fixture
         {
             $album = new Album();
 
-            $medium = $faker->randomElement($media);
-
             $album->setTitle($faker->sentence($nbWords = 4, $variableNbWords = true))
-                ->addMedium($medium);
+                ->addMedium($faker->randomElement($media));
 
             $artist->addAlbum($album);
 
@@ -77,8 +87,6 @@ class AppFixtures extends Fixture
                 ->setArtist($album->getArtist());
 
             $album->addTrack($track);
-
-            $track->addMedium();
 
             $manager->persist($track);
         }

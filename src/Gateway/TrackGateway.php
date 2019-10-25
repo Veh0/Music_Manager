@@ -35,6 +35,16 @@ class TrackGateway
         return $this->trackRepository->findAll();
     }
 
+    public function fetchOrderTracks(string $orderBy): ?array
+    {
+        return $this->trackRepository->findOrder($orderBy);
+    }
+
+    public function fetchOrderAlbums(string $orderBy): ?array
+    {
+        return $this->albumRepository->findOrder($orderBy);
+    }
+
     /**
      * @param string $style
      * @return array|null

@@ -6,44 +6,28 @@ namespace App\Tests\unit\src\Entity\Media;
 
 use App\Entity\Album\Album;
 use App\Entity\Media\Medium;
-use App\Entity\Media\CD;
-use App\Entity\Media\File;
-use App\Entity\Media\Vinyle;
 use Codeception\PHPUnit\TestCase;
 
-class AbstractMediumTest extends TestCase
+class MediumTest extends TestCase
 {
-    public function testPriceAccessors() {
-        // PREPARE
-        $medium = $this->getMockForAbstractClass(Medium::class);
-        // RUN
-        $medium->setPrice(2.5);
-        // ASSERT
-        $this->assertEquals(2.5, $medium->getPrice());
-    }
-
     public function testAlbumAccessors() {
         // PREPARE
-        $medium = $this->getMockForAbstractClass(Medium::class);
+        $medium = new Medium();
+        $medium->setId($medium::VINYLE)->setType();
+
+        $album = new Album();
         // RUN
-        $tracklist = $this->getMockForAbstractClass(Album::class);
-        $medium->setAlbum(new $tracklist());
+        $album->addMedium($medium);
         // ASSERT
-        $this->assertEquals(new $tracklist(), $medium->getAlbum());
+        $this->assertEquals(array($album), $medium->getAlbums()->toArray());
     }
 
     public function testTypeAccessors() {
         // PREPARE
-        $medium = $this->getMockForAbstractClass(Medium::class);
+        $medium = new Medium();
         // RUN
-        $medium->setType('type');
-        $cd = new CD();
-        $vinyle = new Vinyle();
-        $file = new File();
+        $medium->setId($medium::FILE)->setType();
         // ASSERT
-        $this->assertEquals('type', $medium->getType());
-        $this->assertEquals('CD', $cd->getType());
-        $this->assertEquals('Vinyle', $vinyle->getType());
-        $this->assertEquals('File', $file->getType());
+        $this->assertEquals('File', $medium->getType());
     }
 }

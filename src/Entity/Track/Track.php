@@ -5,6 +5,7 @@ namespace App\Entity\Track;
 use App\Entity\Album\AlbumInterface;
 use App\Entity\Artist\Artist;
 use App\Entity\Artist\ArtistInterface;
+use App\Entity\Media\Medium;
 use App\Entity\Media\MediumInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,12 +25,6 @@ class Track implements TrackInterface
      * @ORM\Column(type="string", length=255)
      */
     protected $title;
-
-    /**
-     * @ORM\Column(type="array")
-     * @var MediumInterface[]
-     */
-    protected $media;
 
     /**
      * @ORM\Column(type="integer")
@@ -104,7 +99,7 @@ class Track implements TrackInterface
      * @param ArtistInterface $artist
      * @return $this
      */
-    public function setArtist(ArtistInterface $artist): self
+    public function setArtist(?ArtistInterface $artist): self
     {
         $this->artist = $artist;
 
@@ -126,24 +121,6 @@ class Track implements TrackInterface
     public function setAlbum(?AlbumInterface $album): self
     {
         $this->album = $album;
-
-        return $this;
-    }
-
-    /**
-     * @return MediumInterface[]
-     */
-    public function getMedia(): array
-    {
-        return $this->media;
-    }
-
-    /**
-     * @return Track
-     */
-    public function addMedium()
-    {
-        $this->media = $this->getAlbum()->getMedia();
 
         return $this;
     }

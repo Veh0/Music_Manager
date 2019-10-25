@@ -115,6 +115,7 @@ class Artist implements ArtistInterface
     {
         if ($this->tracks->contains($track)) {
             $this->tracks->removeElement($track);
+            $this->tracks = new ArrayCollection($this->tracks->getValues());
             // set the owning side to null (unless already changed)
             if ($track->getArtist() === $this) {
                 $track->setArtist(null);

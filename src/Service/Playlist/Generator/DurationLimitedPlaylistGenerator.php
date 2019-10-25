@@ -18,17 +18,19 @@ class DurationLimitedPlaylistGenerator extends AbstractPlaylistGenerator
     {
         $fetchTracks = $this->playlistGateway->fetchAllTracks();
 
-        $random = rand(0, count($fetchTracks)-1);
+        //$random = rand(0, count($fetchTracks)-1);
 
         $playlist = new Playlist();
 
         while ($playlist->getDuration() < $criteria['max_duration'])
         {
-            $track = $fetchTracks[$random];
+            $track = $fetchTracks[rand(0, count($fetchTracks)-1)];
 
             if ($playlist->getDuration() + $track->getDuration() > $criteria['max_duration']) break;
 
             $playlist->addTrack($track);
+
+            dump($playlist->getDuration());
         }
 
         return $playlist;

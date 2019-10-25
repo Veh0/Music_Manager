@@ -6,16 +6,16 @@ namespace App\Tests\unit\src\Service;
 
 use App\Entity\Album\Album;
 use App\Entity\Artist\Artist;
-use App\Entity\Media\CD;
-use App\Entity\Media\File;
-use App\Entity\Media\Vinyle;
+use App\Entity\Media\Medium;
 use App\Entity\Track\Track;
 use App\Entity\Track\TrackInterface;
 use App\Gateway\TrackGateway;
 use App\Repository\AlbumRepository;
 use App\Repository\ArtistRepository;
 use App\Repository\TrackRepository;
+use App\Service\Playlist\Generator\AbstractPlaylistGenerator;
 use App\Service\Playlist\Generator\CountLimitedPlaylistGenerator;
+use App\Service\Playlist\Generator\DurationLimitedPlaylistGenerator;
 use App\Service\Playlist\Generator\StyleAndDurationLimitedPlaylistGenerator;
 use App\Service\Playlist\PlaylistManager;
 use App\Service\Playlist\PlaylistManagerException;
@@ -90,14 +90,46 @@ class PlaylistManagerTest extends TestCase
     }
 
     /**
+     * @dataProvider getData
+     * @param array $tracks
+     * @throws PlaylistManagerException
+     */
+    public function testLimitedDurationPlaylistGenerator($trackCountryCd, $trackRapFile, $trackRapCd)
+    {
+        // PREPARE
+        $this->trackRepository->method("findAll")
+            ->willReturn(array($trackRapFile, $trackRapCd,$trackCountryCd));
+        //RUN
+        $playlistManager = new PlaylistManager(new DurationLimitedPlaylistGenerator($this->trackGateway));
+        $criteria['max_duration'] = 400;
+        $playlist = $playlistManager->generatePlaylist($criteria);
+        // ASSERT
+        $this->assertLessThanOrEqual(400, $playlist->getDuration());
+    }
+
+    public function testGatewayAccessors()
+    {
+        // PREPARE
+        $abstractGenerator = $this->getMockForAbstractClass(AbstractPlaylistGenerator::class,[],'',false);
+        // RUN
+        $abstractGenerator->setPlaylistGateway($this->trackGateway);
+        // ASSERT
+        $this->assertEquals($this->trackGateway, $abstractGenerator->getPlaylistGateway());
+    }
+
+    /**
      * @return array
      */
     public function getData()
     {
         $cdAlbum = new Album();
-        $cdAlbum->addMedium(new CD());
+        $cd = new Medium();
+        $cd->setId($cd::CD)->setType();
+        $file = new Medium();
+        $file->setId($file::FILE)->setType();
+        $cdAlbum->addMedium($cd);
         $fileAlbum = new Album();
-        $fileAlbum->addMedium(new File());
+        $fileAlbum->addMedium($file);
 
         $countryArtist = new Artist();
         $countryArtist->setStyle("Country")

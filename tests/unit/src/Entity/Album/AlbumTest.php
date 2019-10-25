@@ -48,11 +48,12 @@ class AlbumTest extends TestCase
     {
         // PREPARE
         $album = new Album;
-        $medium = $this->getMockForAbstractClass(Medium::class);
+        $medium = new Medium();
         // RUN
-        $album -> addMedium(new $medium);
+        $medium->setId($medium::CD)->setType();
+        $album -> addMedium($medium);
         // ASSERT
-        $this -> assertEquals(array(new $medium), $album->getMedia());
+        $this -> assertEquals(array($medium), $album->getMedia()->toArray());
     }
 
     public function testDurationAccessors() {

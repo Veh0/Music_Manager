@@ -37,6 +37,20 @@ class TrackRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findOrder($order)
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        return $queryBuilder->select(array('t', 'a', 'm', 'art'))
+            ->from('App\Entity\Track\Track', 't')
+            ->innerJoin('t.album', 'a')
+            ->innerJoin('a.media', 'm')
+            ->innerJoin('t.artist', 'art')
+            ->orderBy($order, 'ASC')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
     /**
      * @param
      * @return Track[] Returns an array of TrackInterface objects

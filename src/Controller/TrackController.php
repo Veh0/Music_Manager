@@ -28,7 +28,8 @@ class TrackController extends AbstractController
         $fetchTracks = $trackGateway->fetchAllTracks();
 
         return $this->render('track/index.html.twig', [
-            "page_title" => "Track"
+            "page_title" => "Track",
+            "tracks" => $fetchTracks
         ]);
     }
 

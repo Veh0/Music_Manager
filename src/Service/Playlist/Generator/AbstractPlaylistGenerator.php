@@ -18,7 +18,7 @@ abstract class AbstractPlaylistGenerator implements PlaylistGeneratorInterface
      */
     public function __construct(TrackGateway $playlistGateway)
     {
-        $this->playlistGateway = $playlistGateway;
+        $this->setPlaylistGateway($playlistGateway);
     }
 
     /**

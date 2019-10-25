@@ -67,7 +67,7 @@ class ArtistTest extends TestCase
                ->addTrack($delTrack)
                ->removeTrack($delTrack);
         //ASSERT
-        $this->assertEquals(array($track), $artist->getTracks()->toArray());
+        $this->assertSame(array($track), $artist->getTracks()->toArray());
     }
 
 }
