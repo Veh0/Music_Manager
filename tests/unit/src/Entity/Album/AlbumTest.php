@@ -53,7 +53,7 @@ class AlbumTest extends TestCase
         $medium->setId($medium::CD)->setType();
         $album -> addMedium($medium);
         // ASSERT
-        $this -> assertEquals(array($medium), $album->getMedia()->toArray());
+        $this -> assertEquals(array($medium), $album->getMedium()->toArray());
     }
 
     public function testDurationAccessors() {

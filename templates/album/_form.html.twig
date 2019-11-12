@@ -1,0 +1,109 @@
+{{ form_start(form) }}
+
+<div class="input-field col s6">
+    {{ form_widget(form.title, { 'attr': { 'id': 'title' } }) }}
+    {{ form_label(form.title, 'Title', { 'label_attr': { 'for': 'title' } }) }}
+</div>
+<div class="row">
+    <div class="input-field col s6">
+        {{ form_widget(form.artist, { 'attr': { 'id': 'artist', 'class': 'browser-default' } }) }}
+    </div>
+    <div class="input-field col s6">
+        {{ form_widget(form.medium, { 'attr': { 'id': 'medium', 'class': 'browser-default' } }) }}
+    </div>
+</div>
+
+
+{{ form_label(form.tracks, "Tracks") }}
+<ul class="tracks" data-prototype="{{ form_widget(form.tracks.vars.prototype)|e('html_attr') }}">
+    {% for track in form.tracks %}
+        <li>
+            <div class="row">
+                <div class="input-field col s6">
+                    {{ form_widget(form.title, { 'attr': { 'id': 'title' } }) }}
+                    {{ form_label(form.title, 'Title', { 'label_attr': { 'for': 'title' } }) }}
+                </div>
+                <div class="input-field col s6">
+                    {{ form_widget(form.duration, { 'attr': { 'id': 'duration' } }) }}
+                    {{ form_label(form.duration, 'Duration', { 'label_attr': { 'for': 'duration' } }) }}
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+<div class="input-field col s6">
+    {{ form_widget(form.duration, { 'attr': { 'id': 'duration' } }) }}
+    {{ form_label(form.duration, 'Duration', { 'label_attr': { 'for': 'duration' } }) }}
+</div>
+
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+{% block javascripts %}
+    <script>
+        let $collectionHolder;
+
+        // setup an "add a tag" link
+        let $addTrackButton = $('<button type="button" class="btn add_track_link">Add a track</button>');
+        let $newLinkLi = $('<li></li>').append($addTrackButton);
+
+        $(document).ready(function() {
+            // Get the ul that holds the collection of tags
+            $collectionHolder = $('ul.tracks');
+
+            $collectionHolder.find('li').each(function() {
+                addTrackFormDeleteLink($(this));
+            });
+
+            // add the "add a tag" anchor and li to the tags ul
+            $collectionHolder.append($newLinkLi);
+
+            // count the current form inputs we have (e.g. 2), use that as the new
+            // index when inserting a new item (e.g. 2)
+            $collectionHolder.data('index', $collectionHolder.find(':input').length);
+
+            $addTrackButton.on('click', function(e) {
+                // add a new tag form (see next code block)
+                addTrackForm($collectionHolder, $newLinkLi);
+            });
+        });
+
+        function addTrackForm($collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            let prototype = $collectionHolder.data('prototype');
+
+            // get the new index
+            let index = $collectionHolder.data('index');
+
+            let newForm = prototype;
+            // You need this only if you didn't set 'label' => false in your tags field in TaskType
+            // Replace '__name__label__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            // newForm = newForm.replace(/__name__label__/g, index);
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on how many items we have
+            newForm = newForm.replace(/__name__/g, index);
+
+            // increase the index with one for the next item
+            $collectionHolder.data('index', index + 1);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            let $newFormLi = $('<li></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+
+            addTrackFormDeleteLink($newFormLi);
+        }
+
+        function addTrackFormDeleteLink($trackFormLi) {
+            var $removeFormButton = $('<button type="button" class="btn" style="float: right">Delete this track</button>');
+            $trackFormLi.append($removeFormButton);
+
+            $removeFormButton.on('click', function(e) {
+                // remove the li for the tag form
+                $trackFormLi.remove();
+            });
+        }
+    </script>
+{% endblock %}

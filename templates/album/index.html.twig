@@ -34,7 +34,7 @@
                 <td>{{ album.artist.name }}</td>
                 <td>{{ album.duration|date('i:s') }}</td>
                 <td>
-                    {% for medium in album.media.toArray %}
+                    {% for medium in album.medium.toArray %}
                         {{ medium.type }}
                     {% endfor %}
                 </td>

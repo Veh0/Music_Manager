@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\Album\Album;
 use App\Form\Type\AlbumType;
 use App\Gateway\TrackGateway;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,6 +34,11 @@ class AlbumController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/new", name="new_album", methods={"GET", "POST"})
+     * @param Request $request
+     * @return RedirectResponse|Response
+     */
     public function add(Request $request)
     {
         $album = new Album();
@@ -47,12 +53,12 @@ class AlbumController extends AbstractController
             $manager->persist($album);
             $manager->flush();
 
-            return $this->redirectToRoute("index_track");
+            return $this->redirectToRoute("album_index");
         }
 
 
-        return $this->render('track/new.html.twig', [
-            "page_title" => "Track | Add",
+        return $this->render('album/new.html.twig', [
+            "page_title" => "Album | Add",
             "form" => $form->createView()
         ]);
     }

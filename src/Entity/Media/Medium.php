@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\AbstractMediumRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\MediumRepository")
  */
 class Medium implements MediumInterface
 {

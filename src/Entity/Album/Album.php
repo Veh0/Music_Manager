@@ -60,8 +60,8 @@ class Album implements AlbumInterface
         return $this->id;
     }
 
-    /** @return string */
-    public function getTitle(): string
+    /** @return string | null */
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -120,7 +120,7 @@ class Album implements AlbumInterface
     }
 
     /** @return int */
-    public function getDuration(): int
+    public function getDuration(): ?int
     {
         return $this->duration;
     }
@@ -156,7 +156,7 @@ class Album implements AlbumInterface
     /**
      * @return Collection|Medium[]
      */
-    public function getMedia(): Collection
+    public function getMedium(): Collection
     {
         return $this->media;
     }

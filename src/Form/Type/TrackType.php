@@ -19,34 +19,14 @@ class TrackType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title', TextType::class)
-            ->add('artist', EntityType::class, [
-                'class' => Artist::class,
-                'choice_label' => function(Artist $artist) {
-                    return $artist->getName();
-                },
-                'placeholder' => 'Choose an artist'
-            ])
-            ->add('album', EntityType::class, [
-                'class' => Album::class,
-                'choice_label' => function(Album $album) {
-                    return $album->getTitle();
-                },
-                'placeholder' => 'Choose an album'
-            ])
-            ->add('duration', TextType::class);
-            /*->add('media', EntityType::class, [
-                'class' => Album::class,
-                'choice_label' => function(Album $album) {
-                    return $album->getMedia();
-                },
-                'placeholder' => 'Choose a'
-            ]);*/
+                ->add('duration', TextType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Track::class,
+            'data_class' => null,
         ]);
     }
 }
+

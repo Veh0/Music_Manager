@@ -19,13 +19,13 @@ interface AlbumInterface
     //public function addMedium(MediumInterface $medium);
 
     // get Album title
-    public function getTitle(): string;
+    public function getTitle(): ?string;
 
     // get Album Tracks
-    public function getTracks(): Collection;
+    public function getTracks(): ?Collection;
 
     // get Album duration
-    public function getDuration(): int;
+    public function getDuration(): ?int;
 
     // get Album artist
     public function getArtist(): ?ArtistInterface;
