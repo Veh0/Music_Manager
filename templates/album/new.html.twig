@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h1>New Album</h1>
+    <a href="{{ path('album_index') }}" class="btn">Back</a>
+
+    {% include 'album/_form.html.twig' %}
+{% endblock %}

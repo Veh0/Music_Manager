@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\MediumRepository;
 use App\Repository\TrackRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -12,15 +13,12 @@ class HomeController extends AbstractController {
 
     /**
      * @Route("/", name="home")
-     * @param TrackRepository $trackRepository
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param MediumRepository $trackRepository
+     * @return Response
      */
     public function index(MediumRepository $trackRepository)
     {
         $title = "Home";
-
-        dd($trackRepository->findAll());
-
 
         return $this -> render("base.html.twig", [
             "page_title" => $title

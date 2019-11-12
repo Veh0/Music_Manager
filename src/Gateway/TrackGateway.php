@@ -38,6 +38,7 @@ class TrackGateway
     public function fetchOrder(string $orderBy, string $entity): ?array
     {
         $repository = strtolower($entity)."Repository";
+
         return $this->$repository->findOrder($orderBy);
     }
 
@@ -45,7 +46,12 @@ class TrackGateway
     public function fetchWhere(string $where, string $entity): ?array
     {
         $repository = strtolower($entity)."Repository";
+
+        if (empty($where)) return $this->$repository->findAll();
+
         return $this->$repository->findWhere($where);
+
+
     }
 
 
@@ -72,5 +78,10 @@ class TrackGateway
     public function fetchAlbumsByMedium(array $media): ?array
     {
         return $this->albumRepository->findByMedia($media);
+    }
+
+    public function fetchAllArtist(): ?array
+    {
+        return $this->artistRepository->findAll();
     }
 }

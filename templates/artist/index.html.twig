@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+    <h1>Artist</h1>
+
+
+    <div class="row">
+        <div class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">search</i>
+                    <input type="search" id="autocomplete-input" class="autocomplete">
+                    <label for="autocomplete-input">Track Title</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table id="myTable" class="striped">
+        <thead>
+        <tr>
+            <th><a class="order" data-value="art.name">Name</a></th>
+            <th><a class="order" data-value="art.style">Style</a></th>
+            <th><a class="order" data-value="art.albums">Nombre d'albums</a></th>
+            <th><a class="order" data-value="art.tracks">Nombre de tracks</a></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for artist in artists %}
+            <tr data-entry-id="{{ artist.name }}">
+                <td>{{ artist.name }}</td>
+                <td>{{ artist.style }}</td>
+                <td>{{ artist.albums|length }}</td>
+                <td>{{ artist.tracks|length }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        table.striped>tbody>tr:nth-child(odd) {
+            background-color: rgba(0,150,136,0.1);
+        }
+
+        table thead th a {
+            color: #212121;
+        }
+        table thead th a:hover {
+            color: teal;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        //** AUTOCOMPLETE SEARCHBAR **//
+        $(document).ready(function(){
+            var element = $('tr');
+            var elementId = $.map(element, item => $(item).data("entryId"));
+            console.log(elementId);
+
+            var obj = elementId.reduce(function(o, val) { o[val] = null; return o; }, {});
+            console.log(obj)
+            $('input.autocomplete').autocomplete({
+                data : obj
+            });
+        });
+
+        //** SEARCHBAR AJAX REQUEST WHERE CLAUSE **//
+        $('#autocomplete-input').keyup(function () {
+            let param = $(this).val()
+
+            var where_data = {
+                data: param,
+                entity: $('h1').text()
+            }
+
+            console.log(where_data)
+
+
+
+                $.post("{{ path('where_ajax') }}", where_data, function (fetchArtists) {
+                    $("tbody").html("");
+                    console.log(fetchArtists[0]);
+                    for (let i = 0; i < fetchArtists.length; i++) {
+                        let artist = fetchArtists[i];
+                        $("tbody").append('<tr><td>'+artist["name"]+'</td><td>'+artist["style"]+'</td><td>'+artist["albums"].length+'</td><td>'+artist["tracks"].length+'</td></tr>');
+                    }
+                })
+
+        })
+
+        //** ORDER AJAX REQUEST **//
+        $('.order').click(function(e){
+            var order = $(this).data("value");
+            e.preventDefault();
+            console.log(order);
+            var data = {
+                data: order,
+                entity: $('h1').text()
+            };
+            console.log(data);
+            $.post('{{ path("order_ajax") }}', data, function (fetchArtists) {
+                $("tbody").html("");
+                console.log(fetchArtists[0]['title']);
+                for (let i = 0; i < fetchArtists.length; i++) {
+                    let artist = fetchArtists[i];
+                    $("tbody").append('<tr><td>'+artist["name"]+'</td><td>'+artist["style"]+'</td><td>'+artist["albums"].length+'</td><td>'+artist["tracks"].length+'</td></tr>');
+                }
+            })
+        })
+
+    </script>
+{% endblock %}

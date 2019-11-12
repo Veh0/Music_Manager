@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class TrackController extends AbstractController
 {
     /**
-     * @Route("/", name="index_track")
+     * @Route("/", name="track_index")
      * @param TrackGateway $trackGateway
      * @return Response
      */
