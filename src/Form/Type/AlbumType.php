@@ -38,8 +38,7 @@ class AlbumType extends AbstractType
                 'entry_type' => TextType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
-            ])
-            ->add("duration", TextType::class);
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

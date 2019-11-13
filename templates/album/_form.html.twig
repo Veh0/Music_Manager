@@ -1,5 +1,21 @@
 {{ form_start(form) }}
 
+{% form_theme form _self %}
+
+{% block _tracks_entry_row %}
+    <div class="row">
+        <div class="input-field col s6">
+            {{ form_widget(form.title, { 'attr': { 'id': 'title' } }) }}
+            {{ form_label(form.title, 'Title', { 'label_attr': { 'for': 'title' } }) }}
+        </div>
+
+        <div class="input-field col s6">
+            {{ form_widget(form.duration, { 'attr': { 'id': 'duration' } }) }}
+            {{ form_label(form.duration, 'Duration', { 'label_attr': { 'for': 'duration' } }) }}
+        </div>
+    </div>
+{% endblock %}
+
 <div class="input-field col s6">
     {{ form_widget(form.title, { 'attr': { 'id': 'title' } }) }}
     {{ form_label(form.title, 'Title', { 'label_attr': { 'for': 'title' } }) }}
