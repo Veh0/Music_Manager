@@ -40,19 +40,19 @@
     <script>
         let $collectionHolder;
 
-        // setup an "add a tag" link
+        // setup an "add a track" link
         let $addTrackButton = $('<button type="button" class="btn add_track_link">Add a track</button>');
         let $newLinkLi = $('<li></li>').append($addTrackButton);
 
         $(document).ready(function() {
-            // Get the ul that holds the collection of tags
+            // Get the ul that holds the collection of tracks
             $collectionHolder = $('ul.tracks');
 
             $collectionHolder.find('li').each(function() {
                 addTrackFormDeleteLink($(this));
             });
 
-            // add the "add a tag" anchor and li to the tags ul
+            // add the "add a track" anchor and li to the tracks ul
             $collectionHolder.append($newLinkLi);
 
             // count the current form inputs we have (e.g. 2), use that as the new
@@ -60,7 +60,7 @@
             $collectionHolder.data('index', $collectionHolder.find(':input').length);
 
             $addTrackButton.on('click', function(e) {
-                // add a new tag form (see next code block)
+                // add a new track form (see next code block)
                 addTrackForm($collectionHolder, $newLinkLi);
             });
         });

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+<h2>Playlist Generator</h2>
+
+<form>
+    {% for criteria in criterias %}
+        <div class="row" id="{{ criteria }}">
+            <p>
+                <label>
+                    <input type="checkbox" value="{{ criteria }}">
+                    <span>{{ criteria }}</span>
+                </label>
+            </p>
+        </div>
+
+    {% endfor %}
+    <a href="#" class="btn">Generate</a>
+</form>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        //** AJAX **//
+        $(document).ready(function(){
+
+            let criterias = []
+            
+            $('input[type="checkbox"]').click(function () {
+                let item = $(this).attr('value');
+                if ($.inArray(item, criterias) !== -1) {
+                    criterias.splice($.inArray(item, criterias),1)
+                } else {
+                    criterias.push(item)
+                    document.getElementById(item).append("<div class='input-field col s6'><input name='"+ item +"' type='text'><label for='"+ item +"'>"+ item +"</label></div>");
+                }
+
+            })
+
+            $('.btn').click(function (e) {
+                e.preventDefault();
+
+
+                console.log(criterias)
+            })
+
+        })
+    </script>
+{% endblock %}

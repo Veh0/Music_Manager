@@ -13,14 +13,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlaylistController extends AbstractController
 {
     /**
-     * @Route("/playlist")
+     * @Route("/playlist", name="playlist_generator")
      * @param PlaylistManager $playlistManager
      * @return Response
      */
     public function index(PlaylistManager $playlistManager)
     {
-        dump($playlistManager);
+        $criterias = [
+            "max_count",
+            "max_duration",
+            "style"
+        ];
 
-        return new Response();
+        return $this->render('playlist/generator.html.twig', [
+            "page_title" => "Playlist | Generator",
+            "criterias" => $criterias
+        ]);
     }
 }
