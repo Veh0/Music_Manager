@@ -21,22 +21,17 @@
         <li>
             <div class="row">
                 <div class="input-field col s6">
-                    {{ form_widget(form.title, { 'attr': { 'id': 'title' } }) }}
-                    {{ form_label(form.title, 'Title', { 'label_attr': { 'for': 'title' } }) }}
+                    {{ form_widget(track.title, { 'attr': { 'id': 'title' } }) }}
+                    {{ form_label(track.title, 'Title', { 'label_attr': { 'for': 'title' } }) }}
                 </div>
                 <div class="input-field col s6">
-                    {{ form_widget(form.duration, { 'attr': { 'id': 'duration' } }) }}
-                    {{ form_label(form.duration, 'Duration', { 'label_attr': { 'for': 'duration' } }) }}
+                    {{ form_widget(track.duration, { 'attr': { 'id': 'duration' } }) }}
+                    {{ form_label(track.duration, 'Duration', { 'label_attr': { 'for': 'duration' } }) }}
                 </div>
             </div>
         </li>
     {% endfor %}
 </ul>
-
-<div class="input-field col s6">
-    {{ form_widget(form.duration, { 'attr': { 'id': 'duration' } }) }}
-    {{ form_label(form.duration, 'Duration', { 'label_attr': { 'for': 'duration' } }) }}
-</div>
 
 <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
